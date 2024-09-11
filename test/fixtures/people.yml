@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+administrator:
+  name: Administrator
+  is_administrator: true
+
+user:
+  name: User
+  is_administrator: false
