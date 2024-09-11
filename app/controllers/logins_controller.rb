@@ -15,5 +15,10 @@ class LoginsController < ApplicationController
   end
 
   def destroy
+      if session[:current_user_id] then
+        session.delete(:current_user_id)
+        flash[:notice] = "Logged out"
+      end
+      redirect_to new_login_path
   end
 end
