@@ -4,10 +4,19 @@
   "scripts": {
     "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
     "build:css:prefix": "postcss ./app/assets/builds/application.css --use=autoprefixer --output=./app/assets/builds/application.css",
-    "build:css": "yarn build:css:compile && yarn build:css:prefix",
+    "build:css": "sass ./app/assets/stylesheets/application.sass.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
     "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\""
   },
   "browserslist": [
     "defaults"
-  ]
+  ],
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "nodejs": "^0.0.0",
+    "npx": "^10.2.2",
+    "postcss": "^8.4.45",
+    "sass": "^1.78.0",
+    "yarn": "^1.22.22"
+  }
 }
