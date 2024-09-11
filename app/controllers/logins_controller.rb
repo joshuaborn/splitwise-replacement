@@ -6,11 +6,11 @@ class LoginsController < ApplicationController
     begin
       person = Person.find(params[:person_id])
       session[:current_user_id] = person.id
-      redirect_to root_url
+      redirect_to root_path
     rescue ActiveRecord::RecordNotFound
-      session[:current_user_id] = nil
+      session.delete(:current_user_id)
       flash[:error] = "User with ID " + params[:person_id] + " doesn't exist"
-      redirect_to logins_new_url
+      redirect_to new_login_path
     end
   end
 
