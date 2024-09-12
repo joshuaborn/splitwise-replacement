@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_11_190644) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_12_165738) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,4 +20,21 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_11_190644) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "transactions", force: :cascade do |t|
+    t.integer "payer_id"
+    t.integer "ower_id"
+    t.string "payee"
+    t.string "memo"
+    t.date "date"
+    t.decimal "amount_paid"
+    t.decimal "amount_lent"
+    t.date "reconciled_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["date"], name: "index_transactions_on_date"
+  end
+
+  add_foreign_key "transactions", "people", column: "ower_id"
+  add_foreign_key "transactions", "people", column: "payer_id"
 end

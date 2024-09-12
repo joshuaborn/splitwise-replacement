@@ -1,0 +1,41 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  payer: administrator
+  ower: user
+  payee: MyString
+  memo: MyString
+  date: 2024-09-12
+  amount_paid: 9.99
+  amount_lent: 4.99
+  reconciled_on: 2024-09-12
+
+two:
+  payer: user
+  ower: administrator
+  payee: MyString
+  memo: MyString
+  date: 2024-09-12
+  amount_paid: 9.99
+  amount_lent: 5.00
+  reconciled_on: 2024-09-12
+
+three:
+  payer: administrator
+  ower: user
+  payee: MyString
+  memo: MyString
+  date: 2024-09-12
+  amount_paid: 15.00
+  amount_lent: 7.5
+  reconciled_on: nil
+
+four:
+  payer: user
+  ower: administrator
+  payee: MyString
+  memo: MyString
+  date: 2024-09-12
+  amount_paid: 15.00
+  amount_lent: 7.50
+  reconciled_on: nil
