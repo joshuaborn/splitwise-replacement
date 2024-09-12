@@ -1,5 +1,6 @@
 class LoginsController < ApplicationController
   def new
+    @people = Person.all
   end
 
   def create

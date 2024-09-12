@@ -1,2 +1,9 @@
-<h1>Logins#new</h1>
-<p>Find me in app/views/logins/new.html.erb</p>
+<p>Choose a user to log in as.</p>
+
+<h2>Users</h2>
+
+<ul>
+<% @people.each do |person| %>
+    <li><%= button_to person.name, login_path, params: {person_id: person.id}, method: :post %></li>
+<% end %>
+</ul>
