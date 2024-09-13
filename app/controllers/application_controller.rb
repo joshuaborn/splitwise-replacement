@@ -6,12 +6,10 @@ class ApplicationController < ActionController::Base
 
   private
     def logged_in?
-      session[:current_user_id].present? and Person.exists?(session[:current_user_id])
+      session[:current_user_id].present? and (@current_user = Person.where(id: session[:current_user_id]).first)
     end
     def require_login
-      if logged_in?
-        @current_user = Person.find(session[:current_user_id])
-      else
+      unless logged_in?
         flash[:error] = "Please log in to access this page"
         redirect_to new_login_url
       end
