@@ -12,7 +12,7 @@ class LoginsController < ApplicationController
       redirect_to root_path
     rescue ActiveRecord::RecordNotFound
       session.delete(:current_user_id)
-      flash[:error] = "User with ID " + params[:person_id] + " doesn't exist"
+      flash[:danger] = "User with ID " + params[:person_id] + " doesn't exist."
       redirect_to new_login_path
     end
   end
@@ -20,7 +20,7 @@ class LoginsController < ApplicationController
   def destroy
       if session[:current_user_id] then
         session.delete(:current_user_id)
-        flash[:notice] = "Logged out"
+        flash[:info] = "Logged out."
       end
       redirect_to new_login_path
   end

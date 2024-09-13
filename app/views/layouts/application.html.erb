@@ -28,14 +28,12 @@
           <div class="navbar-start">
             <!-- navbar items -->
           </div>
-
           <div class="navbar-end">
             <% if @current_user %>
               <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
                   <%= @current_user.name %>
                 </a>
-
                 <div class="navbar-dropdown">
                   <%= button_to 'Logout', login_path, method: 'delete', class: 'navbar-item' %>
                 </div>
@@ -45,6 +43,13 @@
         </div>
       </div>
     </nav>
+    <% if flash.any? %>
+      <% flash.each do |type, msg| %>
+        <div class="notification is-<%= type %> container">
+          <%= msg %>
+        </div>
+      <% end %>
+    <% end %>
     <section class="section container">
       <%= yield %>
     </section>

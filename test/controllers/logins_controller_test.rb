@@ -16,15 +16,15 @@ class LoginsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to new_login_path
     assert_nil session[:current_user_id]
-    assert_nil flash[:error]
-    assert_equal "Logged out", flash[:notice]
+    assert_nil flash[:danger]
+    assert_equal "Logged out.", flash[:info]
   end
 
   test "should redirect back to login page if user is not found" do
     post login_path, params: { person_id: 1 }
 
     assert_nil session[:current_user_id]
-    assert_equal "User with ID 1 doesn't exist", flash[:error]
+    assert_equal "User with ID 1 doesn't exist.", flash[:danger]
     assert_redirected_to new_login_path
   end
 end
