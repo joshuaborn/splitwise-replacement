@@ -1,8 +1,5 @@
-<% content_for :title, "Transactions" %>
-
-<h1>Transactions</h1>
-
-<div id="transactions">
+<h1 class="title">Transactions</h1>
+<div id="transactions" class="block">
   <% @transactions.each do |transaction| %>
     <%= render transaction %>
   <% end %>
