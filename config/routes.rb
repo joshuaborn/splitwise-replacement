@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :people
   root "transactions#index"
 
   resource :login, only: [ :new, :create, :destroy ]
