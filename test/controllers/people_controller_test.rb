@@ -29,12 +29,7 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
       post people_url, params: { person: { is_administrator: @person.is_administrator, name: @person.name } }
     end
 
-    assert_redirected_to person_url(Person.last)
-  end
-
-  test "should show person" do
-    get person_url(@person)
-    assert_response :success
+    assert_redirected_to people_url
   end
 
   test "should get edit" do
@@ -44,7 +39,7 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
 
   test "should update person" do
     patch person_url(@person), params: { person: { is_administrator: @person.is_administrator, name: @person.name } }
-    assert_redirected_to person_url(@person)
+    assert_redirected_to people_url
   end
 
   test "should destroy person" do

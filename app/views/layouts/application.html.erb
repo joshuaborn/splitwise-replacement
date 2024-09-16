@@ -22,11 +22,11 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="container">
         <div class="navbar-brand">
-          <%= link_to 'Splitwise Replacement', root_url, class: 'navbar-item' %>
+          <%= link_to 'Home', root_url, class: 'navbar-item' %>
         </div>
         <div class="navbar-menu">
           <div class="navbar-start">
-            <%= link_to 'Admin', people_path, class: 'navbar-item' if @current_user.present? and @current_user.is_administrator? %>
+            <%= link_to 'User Management', people_path, class: 'navbar-item' if @current_user.present? and @current_user.is_administrator? %>
           </div>
           <div class="navbar-end">
             <% if @current_user %>

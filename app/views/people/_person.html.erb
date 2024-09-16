@@ -1,12 +1,8 @@
-<div id="<%= dom_id person %>">
-  <p>
-    <strong>Name:</strong>
-    <%= person.name %>
-  </p>
-
-  <p>
-    <strong>Is administrator:</strong>
-    <%= person.is_administrator %>
-  </p>
-
-</div>
+<td class="is-vcentered">
+  <%= person.name %>
+</td>
+<td class="is-vcentered">
+  <% if person.is_administrator %>
+    Administrator
+  <% end -%>
+</td>

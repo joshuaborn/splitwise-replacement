@@ -1,16 +1,27 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "People" %>
-
-<h1>People</h1>
-
-<div id="people">
-  <% @people.each do |person| %>
-    <%= render person %>
-    <p>
-      <%= link_to "Show this person", person %>
-    </p>
-  <% end %>
+<% content_for :title, "User Management" %>
+<h1 class="title">User Management</h2>
+<div class="block">
+  <%= link_to "Create New User", new_person_path, class: "button is-link" %>
 </div>
-
-<%= link_to "New person", new_person_path %>
+<table id="people" class="table">
+  <thead>
+    <tr>
+      <th class="has-text-centered">Name</th>
+      <th class="has-text-centered"><abbr title="Is Administrator?">Admin?</abbr></th>
+      <th class="has-text-centered" colspan=2>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @people.each do |person| %>
+      <tr id="<%= dom_id person %>">
+        <%= render person %>
+        <td class="is-vcentered">
+          <%= link_to "Edit", edit_person_path(person), class: "button is-link" %>
+        </td>
+        <td class="is-vcentered">
+          <%= button_to 'Delete', person, method: "delete", class: "button is-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
