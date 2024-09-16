@@ -26,7 +26,7 @@
         </div>
         <div class="navbar-menu">
           <div class="navbar-start">
-            <!-- navbar items -->
+            <%= link_to 'Admin', people_path, class: 'navbar-item' if @current_user.present? and @current_user.is_administrator? %>
           </div>
           <div class="navbar-end">
             <% if @current_user %>

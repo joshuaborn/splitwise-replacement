@@ -1,5 +1,6 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: %i[ show edit update destroy ]
+  before_action :require_administrator
 
   # GET /people or /people.json
   def index
@@ -66,5 +67,12 @@ class PeopleController < ApplicationController
     # Only allow a list of trusted parameters through.
     def person_params
       params.require(:person).permit(:name, :is_administrator)
+    end
+
+    def require_administrator
+      unless @current_user.is_administrator?
+        flash[:danger] = "The administrator functionality can only be accessed by administrators."
+        redirect_to root_path
+      end
     end
 end
