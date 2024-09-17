@@ -23,6 +23,20 @@ class Transaction < ApplicationRecord
     def find_for_person(person)
       Transaction.where(first_person: person).or(Transaction.where(second_person: person))
     end
+
+    def find_for_people(first_person, second_person)
+      if first_person.id > second_person.id then
+        Transaction.where(
+          first_person: second_person,
+          second_person: first_person
+        ).all
+      else
+        Transaction.where(
+          first_person: first_person,
+          second_person: second_person
+        ).all
+      end
+    end
   end
 
   private

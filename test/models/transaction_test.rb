@@ -44,4 +44,11 @@ class TransactionTest < ActiveSupport::TestCase
     assert_equal people(:user_one), transaction.first_person
     assert_equal people(:user_two), transaction.second_person
   end
+  test "can get all transactions between two people, regardless of argument order" do
+    assert people(:user_one).id < people(:user_two).id
+    transactions = Transaction.where(first_person: people(:user_one), second_person: people(:user_two))
+    assert transactions.present?
+    assert_equal transactions, Transaction.find_for_people(people(:user_one), people(:user_two))
+    assert_equal transactions, Transaction.find_for_people(people(:user_two), people(:user_one))
+  end
 end
