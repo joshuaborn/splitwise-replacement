@@ -9,6 +9,8 @@ class Transaction < ApplicationRecord
   validates :absolute_amount_lent, numericality: { less_than_or_equal_to: :absolute_amount_paid }
   validates :second_person_id, numericality: { greater_than: :first_person_id }
 
+  before_validation :ensure_order_of_associated_people
+
   def absolute_amount_paid
     self.amount_paid.abs()
   end
@@ -22,4 +24,13 @@ class Transaction < ApplicationRecord
       Transaction.where(first_person: person).or(Transaction.where(second_person: person))
     end
   end
+
+  private
+    def ensure_order_of_associated_people
+      if self.first_person.id > self.second_person.id then
+        old_first_person = self.first_person
+        self.first_person = self.second_person
+        self.second_person = old_first_person
+      end
+    end
 end

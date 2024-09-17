@@ -3,10 +3,20 @@ require "test_helper"
 class TransactionTest < ActiveSupport::TestCase
   test "amount lent cannot be greater in absolute value than amount paid" do
     amount_paid = 9.0
-    transaction = Transaction.new(amount_lent: 10, amount_paid: amount_paid)
+    transaction = Transaction.new(
+      first_person: people(:user_one),
+      second_person: people(:user_two),
+      amount_lent: 10,
+      amount_paid: amount_paid
+    )
     assert_not transaction.validate
     assert_includes transaction.errors[:absolute_amount_lent], "must be less than or equal to " + amount_paid.to_s
-    transaction = Transaction.new(amount_lent: -10, amount_paid: -amount_paid)
+    transaction = Transaction.new(
+      first_person: people(:user_one),
+      second_person: people(:user_two),
+      amount_lent: -10,
+      amount_paid: -amount_paid
+    )
     assert_not transaction.validate
     assert_includes transaction.errors[:absolute_amount_lent], "must be less than or equal to " + amount_paid.to_s
   end
@@ -22,10 +32,16 @@ class TransactionTest < ActiveSupport::TestCase
        assert_includes combined_transactions, transaction
     end
   end
-  test "does not allow person with greater ID in first slot" do
+  test "switches associated people if first person's ID is greater than second person's ID" do
     assert people(:user_one).id < people(:user_two).id
-    transaction = Transaction.new(first_person: people(:user_two), second_person: people(:user_one), amount_lent: 5, amount_paid: 10)
-    assert_not transaction.validate
-    assert_includes transaction.errors[:second_person_id], "must be greater than " + people(:user_two).id.to_s
+    transaction = Transaction.new(
+      first_person: people(:user_two),
+      second_person: people(:user_one),
+      amount_lent: 5,
+      amount_paid: 10
+    )
+    assert transaction.validate
+    assert_equal people(:user_one), transaction.first_person
+    assert_equal people(:user_two), transaction.second_person
   end
 end
