@@ -7,6 +7,7 @@ class Transaction < ApplicationRecord
   validates :amount_paid, presence: true
   validates :amount_lent, presence: true
   validates :absolute_amount_lent, numericality: { less_than_or_equal_to: :absolute_amount_paid }
+  validates :second_person_id, numericality: { greater_than: :first_person_id }
 
   def absolute_amount_paid
     self.amount_paid.abs()
