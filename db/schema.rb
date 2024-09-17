@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_12_165738) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_17_182251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,8 +22,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_12_165738) do
   end
 
   create_table "transactions", force: :cascade do |t|
-    t.integer "payer_id"
-    t.integer "ower_id"
     t.string "payee"
     t.string "memo"
     t.date "date"
@@ -32,9 +30,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_12_165738) do
     t.date "reconciled_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "first_person_id"
+    t.integer "second_person_id"
     t.index ["date"], name: "index_transactions_on_date"
   end
 
-  add_foreign_key "transactions", "people", column: "ower_id"
-  add_foreign_key "transactions", "people", column: "payer_id"
+  add_foreign_key "transactions", "people", column: "first_person_id"
+  add_foreign_key "transactions", "people", column: "second_person_id"
 end

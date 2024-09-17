@@ -2,7 +2,7 @@ require "test_helper"
 
 class TransactionsControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
-    post login_path, params: { person_id: people(:user).id }
+    post login_path, params: { person_id: people(:user_one).id }
     get transactions_path
     assert_response :success
   end

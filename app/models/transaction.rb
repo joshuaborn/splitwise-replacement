@@ -1,15 +1,24 @@
 class Transaction < ApplicationRecord
-  belongs_to :payer, class_name: "Person"
-  belongs_to :ower, class_name: "Person"
+  belongs_to :first_person, class_name: "Person"
+  belongs_to :second_person, class_name: "Person"
 
-  validates :payer, presence: true
-  validates :ower, presence: true
-  validates :amount_paid, numericality: { greater_than_or_equal_to: 0 }
-  validates :amount_lent, numericality: { less_than_or_equal_to: :amount_paid }
+  validates :first_person, presence: true
+  validates :second_person, presence: true
+  validates :amount_paid, presence: true
+  validates :amount_lent, presence: true
+  validates :absolute_amount_lent, numericality: { less_than_or_equal_to: :absolute_amount_paid }
+
+  def absolute_amount_paid
+    self.amount_paid.abs()
+  end
+
+  def absolute_amount_lent
+    self.amount_lent.abs()
+  end
 
   class << self
     def find_for_person(person)
-      Transaction.where(ower: person).or(Transaction.where(payer: person)).order(date: :desc)
+      Transaction.where(first_person: person).or(Transaction.where(second_person: person))
     end
   end
 end

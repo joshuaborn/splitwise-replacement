@@ -8,7 +8,7 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
 
   test "should not be allowed to access any actions if not an administrator" do
     delete login_path
-    post login_path, params: { person_id: people(:user).id }
+    post login_path, params: { person_id: people(:user_one).id }
     get people_url
     assert_redirected_to root_path
     assert_equal "The administrator functionality can only be accessed by administrators.", flash[:danger]

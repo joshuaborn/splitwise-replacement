@@ -1,8 +1,8 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  payer: administrator
-  ower: user
+  first_person: administrator
+  second_person: user_one
   payee: MyString
   memo: MyString
   date: 2024-09-01
@@ -11,8 +11,8 @@ one:
   reconciled_on: 2024-09-12
 
 two:
-  payer: user
-  ower: administrator
+  first_person: administrator
+  second_person: user_one
   payee: MyString
   memo: MyString
   date: 2024-09-02
@@ -21,8 +21,8 @@ two:
   reconciled_on: 2024-09-12
 
 three:
-  payer: administrator
-  ower: user
+  first_person: administrator
+  second_person: user_one
   payee: MyString
   memo: MyString
   date: 2024-09-03
@@ -31,8 +31,28 @@ three:
   reconciled_on: nil
 
 four:
-  payer: user
-  ower: administrator
+  first_person: administrator
+  second_person: user_two
+  payee: MyString
+  memo: MyString
+  date: 2024-09-04
+  amount_paid: 15.00
+  amount_lent: 7.50
+  reconciled_on: nil
+
+five:
+  first_person: user_one
+  second_person: user_two
+  payee: MyString
+  memo: MyString
+  date: 2024-09-03
+  amount_paid: 15.00
+  amount_lent: 7.5
+  reconciled_on: nil
+
+six:
+  first_person: user_one
+  second_person: user_two
   payee: MyString
   memo: MyString
   date: 2024-09-04

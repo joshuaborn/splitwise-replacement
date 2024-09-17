@@ -1,6 +1,6 @@
 class Person < ApplicationRecord
-  has_many :payer_transactions, class_name: "Transaction", foreign_key: "payer_id", dependent: :destroy
-  has_many :ower_transactions, class_name: "Transaction", foreign_key: "ower_id", dependent: :destroy
+  has_many :transactions_as_first_person, class_name: "Transaction", foreign_key: "first_person_id", dependent: :destroy
+  has_many :transactions_as_second_person, class_name: "Transaction", foreign_key: "second_person_id", dependent: :destroy
 
   validates :name, presence: true
 

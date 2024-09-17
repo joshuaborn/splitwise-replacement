@@ -4,6 +4,10 @@ administrator:
   name: Administrator
   is_administrator: true
 
-user:
-  name: User
+user_one:
+  name: User1
+  is_administrator: false
+
+user_two:
+  name: User2
   is_administrator: false
