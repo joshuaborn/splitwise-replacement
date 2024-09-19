@@ -20,7 +20,7 @@ class PeopleController < ApplicationController
   def create
     @person = Person.new(person_params)
     if @person.save
-      redirect_to people_url, notice: "User was successfully created."
+      redirect_to people_url, flash: { info: "User was successfully created." }
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,7 +29,7 @@ class PeopleController < ApplicationController
   # PATCH/PUT /people/1
   def update
     if @person.update(person_params)
-      redirect_to people_url, notice: "User was successfully updated."
+      redirect_to people_url, flash: { info: "User was successfully updated." }
     else
       render :edit, status: :unprocessable_entity
     end
@@ -38,7 +38,7 @@ class PeopleController < ApplicationController
   # DELETE /people/1
   def destroy
     @person.destroy!
-    redirect_to people_url, notice: "User was successfully deleted."
+    redirect_to people_url, flash: { info: "User was successfully deleted." }
   end
 
   private
