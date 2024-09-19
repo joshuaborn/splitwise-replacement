@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   before_action :set_person, only: %i[ edit update destroy ]
   before_action :require_administrator
 
-  # GET /people or /people.json
+  # GET /people
   def index
     @people = Person.all
   end
@@ -16,42 +16,29 @@ class PeopleController < ApplicationController
   def edit
   end
 
-  # POST /people or /people.json
+  # POST /people
   def create
     @person = Person.new(person_params)
-
-    respond_to do |format|
-      if @person.save
-        format.html { redirect_to people_url, notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @person }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
-      end
+    if @person.save
+      redirect_to people_url, notice: "User was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /people/1 or /people/1.json
+  # PATCH/PUT /people/1
   def update
-    respond_to do |format|
-      if @person.update(person_params)
-        format.html { redirect_to people_url, notice: "User was successfully updated." }
-        format.json { render :show, status: :ok, location: @person }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
-      end
+    if @person.update(person_params)
+      redirect_to people_url, notice: "User was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /people/1 or /people/1.json
+  # DELETE /people/1
   def destroy
     @person.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to people_url, notice: "User was successfully deleted." }
-      format.json { head :no_content }
-    end
+    redirect_to people_url, notice: "User was successfully deleted."
   end
 
   private
