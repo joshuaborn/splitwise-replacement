@@ -32,6 +32,11 @@ class Expense < ApplicationRecord
       end
       expense
     end
+    def find_between_two_people(first_person, second_person)
+      Expense.joins("JOIN person_expenses AS pe1 ON expenses.id = pe1.expense_id").
+        joins("JOIN person_expenses AS pe2 ON expenses.id = pe2.expense_id").
+        where("pe1.person_id = ? AND pe2.person_id = ?", first_person, second_person)
+    end
   end
 
   # private
