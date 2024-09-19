@@ -4,4 +4,5 @@ class PersonExpense < ApplicationRecord
 
   validates :person, presence: true
   validates :expense, presence: true
+  validates :amount, presence: true
 end

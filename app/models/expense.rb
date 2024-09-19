@@ -4,6 +4,7 @@ class Expense < ApplicationRecord
 
   validates :amount_paid, presence: true
   validates :person_expenses, length: { minimum: 2 }
+  validates_associated :person_expenses
 
   # class << self
   # end
