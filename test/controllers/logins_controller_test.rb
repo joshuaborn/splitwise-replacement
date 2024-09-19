@@ -10,11 +10,11 @@ class LoginsControllerTest < ActionDispatch::IntegrationTest
     post login_path, params: { person_id: people(:administrator).id }
 
     assert_equal people(:administrator).id, session[:current_user_id]
-    assert_redirected_to root_path
+    assert_redirected_to root_url
 
     delete login_path
 
-    assert_redirected_to new_login_path
+    assert_redirected_to new_login_url
     assert_nil session[:current_user_id]
     assert_nil flash[:danger]
     assert_equal "Logged out.", flash[:info]
@@ -25,6 +25,6 @@ class LoginsControllerTest < ActionDispatch::IntegrationTest
 
     assert_nil session[:current_user_id]
     assert_equal "User with ID 1 doesn't exist.", flash[:danger]
-    assert_redirected_to new_login_path
+    assert_redirected_to new_login_url
   end
 end

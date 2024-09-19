@@ -9,11 +9,11 @@ class LoginsController < ApplicationController
     begin
       person = Person.find(params[:person_id])
       session[:current_user_id] = person.id
-      redirect_to root_path
+      redirect_to root_url
     rescue ActiveRecord::RecordNotFound
       session.delete(:current_user_id)
       flash[:danger] = "User with ID " + params[:person_id] + " doesn't exist."
-      redirect_to new_login_path
+      redirect_to new_login_url
     end
   end
 
@@ -22,6 +22,6 @@ class LoginsController < ApplicationController
         session.delete(:current_user_id)
         flash[:info] = "Logged out."
       end
-      redirect_to new_login_path
+      redirect_to new_login_url
   end
 end

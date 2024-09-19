@@ -55,7 +55,7 @@ class PeopleController < ApplicationController
     def require_administrator
       unless @current_user.is_administrator?
         flash[:danger] = "The administrator functionality can only be accessed by administrators."
-        redirect_to root_path
+        redirect_to root_url
       end
     end
 end
