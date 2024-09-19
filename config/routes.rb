@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  root "transactions#index"
+  root "expenses#index"
 
   resource :login, only: [ :new, :create, :destroy ]
-  resources :transactions, only: [ :index ]
+  resources :expenses, only: [ :index ]
   resources :people, except: [ :show ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

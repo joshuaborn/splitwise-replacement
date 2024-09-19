@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_17_182251) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_19_165241) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "expenses", force: :cascade do |t|
+    t.string "payee"
+    t.string "memo"
+    t.date "date"
+    t.decimal "amount_paid"
+    t.date "reconciled_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["date"], name: "index_expenses_on_date"
+  end
 
   create_table "people", force: :cascade do |t|
     t.string "name"
@@ -21,20 +32,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_17_182251) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "transactions", force: :cascade do |t|
-    t.string "payee"
-    t.string "memo"
-    t.date "date"
-    t.decimal "amount_paid"
-    t.decimal "amount_lent"
-    t.date "reconciled_on"
+  create_table "person_expenses", force: :cascade do |t|
+    t.integer "expense_id"
+    t.integer "person_id"
+    t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "first_person_id"
-    t.integer "second_person_id"
-    t.index ["date"], name: "index_transactions_on_date"
   end
 
-  add_foreign_key "transactions", "people", column: "first_person_id"
-  add_foreign_key "transactions", "people", column: "second_person_id"
+  add_foreign_key "person_expenses", "expenses"
+  add_foreign_key "person_expenses", "people"
 end
