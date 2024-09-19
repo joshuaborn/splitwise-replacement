@@ -52,14 +52,7 @@ class ExpenseTest < ActiveSupport::TestCase
     assert_equal (-3.66), expense.person_expenses.where(person: people(:user_two)).first.dollar_amount
   end
   test "getting all and only expenses split between two people" do
-    Expense.split_between_two_people(people(:user_one), people(:user_two), 6.52).save!
-    Expense.split_between_two_people(people(:user_one), people(:user_two), 8.88).save!
-    Expense.split_between_two_people(people(:user_two), people(:user_one), 105.22).save!
-    Expense.split_between_two_people(people(:user_two), people(:user_one), 1032.41).save!
-    Expense.split_between_two_people(people(:administrator), people(:user_one), 923.23).save!
-    Expense.split_between_two_people(people(:user_one), people(:administrator), 28.01).save!
-    Expense.split_between_two_people(people(:administrator), people(:user_two), 237.31).save!
-    Expense.split_between_two_people(people(:user_two), people(:administrator), 38.45).save!
+    build_expenses_for_tests()
     expenses = Expense.find_between_two_people(people(:user_one), people(:user_two))
     assert_equal 4, expenses.length
     assert_equal 115303, expenses.inject(0) { |sum, expense| sum + expense.amount_paid }
