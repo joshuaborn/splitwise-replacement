@@ -9,4 +9,8 @@ class PersonExpense < ApplicationRecord
   def dollar_amount
     self.amount.to_f / 100
   end
+
+  def dollar_amount=(dollars)
+    self.amount = (100 * dollars).to_i
+  end
 end

@@ -10,6 +10,9 @@ class Expense < ApplicationRecord
     self.amount_paid.to_f / 100
   end
 
+  def dollar_amount_paid=(dollars)
+    self.amount_paid = (100 * dollars).to_i
+  end
   # class << self
   # end
 
