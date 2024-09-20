@@ -17,4 +17,11 @@ class PersonExpenseTest < ActiveSupport::TestCase
     assert_equal 4, person_expenses.length
     assert_equal -56111, person_expenses.inject(0) { |sum, expense| sum + expense.amount }
   end
+  test "when a PersonExpense is first created between two people, the amount owed becomes the cumulative sum" do
+    Expense.split_between_two_people("2024-09-21", people(:user_one), people(:user_two), 6.52).save!
+    assert_equal 1, people(:user_one).person_expenses.count
+    assert_equal 326, people(:user_one).person_expenses.first.cumulative_sum
+    assert_equal 1, people(:user_two).person_expenses.count
+    assert_equal (-326), people(:user_two).person_expenses.first.cumulative_sum
+  end
 end

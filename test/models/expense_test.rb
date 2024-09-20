@@ -30,21 +30,21 @@ class ExpenseTest < ActiveSupport::TestCase
     assert_equal 731, Expense.new(dollar_amount_paid: 7.31).amount_paid
   end
   test "creating an Expense by splitting between two people" do
-    expense = Expense.split_between_two_people(people(:user_one), people(:user_two), 10.00)
+    expense = Expense.split_between_two_people("2024-09-24", people(:user_one), people(:user_two), 10.00)
     expense.save!
     assert_equal 1000, expense.amount_paid
     assert_equal 10.00, expense.dollar_amount_paid
     assert_equal 5.00, expense.person_expenses.where(person: people(:user_one)).first.dollar_amount
     assert_equal (-5.00), expense.person_expenses.where(person: people(:user_two)).first.dollar_amount
     srand(9192024)
-    expense = Expense.split_between_two_people(people(:user_one), people(:user_two), 7.31)
+    expense = Expense.split_between_two_people("2024-09-25", people(:user_one), people(:user_two), 7.31)
     expense.save!
     assert_equal 731, expense.amount_paid
     assert_equal 7.31, expense.dollar_amount_paid
     assert_equal 3.66, expense.person_expenses.where(person: people(:user_one)).first.dollar_amount
     assert_equal (-3.65), expense.person_expenses.where(person: people(:user_two)).first.dollar_amount
     srand(9192027)
-    expense = Expense.split_between_two_people(people(:user_one), people(:user_two), 7.31)
+    expense = Expense.split_between_two_people("2024-09-26", people(:user_one), people(:user_two), 7.31)
     expense.save!
     assert_equal 731, expense.amount_paid
     assert_equal 7.31, expense.dollar_amount_paid

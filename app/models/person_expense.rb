@@ -6,6 +6,8 @@ class PersonExpense < ApplicationRecord
   validates :expense, presence: true
   validates :amount, presence: true
 
+  before_save :set_cumulative_sums
+
   def dollar_amount
     self.amount.to_f / 100
   end
@@ -21,4 +23,11 @@ class PersonExpense < ApplicationRecord
         where("person_expenses.person_id = ? AND pe2.person_id = ?", first_person, second_person)
     end
   end
+
+  private
+    def set_cumulative_sums
+      if self.person.person_expenses.empty?
+        self.cumulative_sum = self.amount
+      end
+    end
 end
