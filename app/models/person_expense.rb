@@ -44,11 +44,9 @@ class PersonExpense < ApplicationRecord
       if existing_person_expenses.empty?
         self.cumulative_sum = self.amount
       else
-        person_expenses_before = existing_person_expenses.where("expenses.date <= ?", self.expense.date)
-        previous_person_expense = person_expenses_before.last
+        previous_person_expense = existing_person_expenses.where("expenses.date <= ?", self.expense.date).last
         self.cumulative_sum = self.amount + previous_person_expense.cumulative_sum
-        person_expenses_after = existing_person_expenses.where("expenses.date > ?", self.expense.date)
-        person_expenses_after.inject(self.cumulative_sum) do |sum, person_expense|
+        existing_person_expenses.where("expenses.date > ?", self.expense.date).inject(self.cumulative_sum) do |sum, person_expense|
           person_expense.update_columns(cumulative_sum: sum + person_expense.amount)
           person_expense.cumulative_sum
         end
