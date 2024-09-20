@@ -24,6 +24,10 @@ class PersonExpense < ApplicationRecord
     end
   end
 
+  def dollar_cumulative_sum
+    self.cumulative_sum.to_f / 100
+  end
+
   class << self
     def find_for_person_with_other_person(first_person, second_person)
       PersonExpense.joins("LEFT OUTER JOIN expenses ON expenses.id = person_expenses.expense_id").

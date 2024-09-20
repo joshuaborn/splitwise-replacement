@@ -58,4 +58,11 @@ class PersonExpenseTest < ActiveSupport::TestCase
     assert_equal (-3991), person_expenses[3].cumulative_sum
     assert_equal (-55612), person_expenses[4].cumulative_sum
   end
+  test "getting cumulative_sum in dollars" do
+    srand(9192031)
+    expense = Expense.split_between_two_people("2024-09-21", people(:user_one), people(:user_two), 6.51)
+    expense.save!
+    assert_equal (-3.26), expense.person_expenses.first.dollar_cumulative_sum
+    assert_equal 3.25, expense.person_expenses.last.dollar_cumulative_sum
+  end
 end
