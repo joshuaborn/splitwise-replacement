@@ -16,6 +16,14 @@ class PersonExpense < ApplicationRecord
     self.amount = (100 * dollars).to_i
   end
 
+  def get_other_person_expense
+    if self.persisted?
+      self.expense.person_expenses.where.not(person: self.person).first
+    else
+      self.expense.person_expenses.detect { |person_expense| person_expense.person_id != self.person_id }
+    end
+  end
+
   class << self
     def find_for_person_with_other_person(first_person, second_person)
       PersonExpense.joins("LEFT OUTER JOIN expenses ON expenses.id = person_expenses.expense_id").

@@ -15,7 +15,17 @@ class PersonExpenseTest < ActiveSupport::TestCase
       assert_equal people(:user_one), person_expense.person
     end
     assert_equal 4, person_expenses.length
-    assert_equal -56111, person_expenses.inject(0) { |sum, expense| sum + expense.amount }
+    assert_equal (-56111), person_expenses.inject(0) { |sum, expense| sum + expense.amount }
+  end
+  test "getting of PersonExpense associated with other Person" do
+    expense = Expense.split_between_two_people("2024-09-21", people(:user_one), people(:user_two), 6.52)
+    this_person_expense = expense.person_expenses.detect { |person_expense| person_expense.person_id == people(:user_one).id }
+    assert_equal people(:user_one), this_person_expense.person
+    other_person_expense = this_person_expense.get_other_person_expense()
+    assert_equal people(:user_two), other_person_expense.person
+    expense.save!
+    other_person_expense = this_person_expense.get_other_person_expense()
+    assert_equal people(:user_two), other_person_expense.person
   end
   test "when a PersonExpense is first created between two people, the amount owed becomes the cumulative sum" do
     Expense.split_between_two_people("2024-09-21", people(:user_one), people(:user_two), 6.52).save!
