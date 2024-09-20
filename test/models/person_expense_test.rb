@@ -35,15 +35,27 @@ class PersonExpenseTest < ActiveSupport::TestCase
     assert_equal (-326), people(:user_two).person_expenses.first.cumulative_sum
   end
   test "when a PersonExpense is saved, its cumulative_sum is set to the sum of the previous PersonExpense's cumulative_sum and this PersonExpense's amount" do
+    srand(9192031)
     build_expenses_for_tests()
     person_expenses = PersonExpense.find_for_person_with_other_person(people(:user_one), people(:user_two))
-    assert_equal 326, person_expenses[3].cumulative_sum
-    assert_equal 770, person_expenses[2].cumulative_sum
-    assert_equal (-4491), person_expenses[1].cumulative_sum
-    assert_equal (-56112), person_expenses[0].cumulative_sum
+    assert_equal 326, person_expenses[0].cumulative_sum
+    assert_equal 770, person_expenses[1].cumulative_sum
+    assert_equal (-4491), person_expenses[2].cumulative_sum
+    assert_equal (-56112), person_expenses[3].cumulative_sum
     expense = Expense.split_between_two_people("2024-09-26", people(:user_one), people(:user_two), 10.00)
     expense.save!
     person_expense = expense.person_expenses.where(person: people(:user_one)).first
     assert_equal (-55612), person_expense.cumulative_sum
+  end
+  test "when a PersonExpense is saved before another, each's cumulative_sum is set appropriately" do
+    srand(9192031)
+    build_expenses_for_tests()
+    Expense.split_between_two_people("2024-09-20", people(:user_one), people(:user_two), 10.00).save!
+    person_expenses = PersonExpense.find_for_person_with_other_person(people(:user_one), people(:user_two))
+    assert_equal 326, person_expenses[0].cumulative_sum
+    assert_equal 826, person_expenses[1].cumulative_sum
+    assert_equal 1270, person_expenses[2].cumulative_sum
+    assert_equal (-3991), person_expenses[3].cumulative_sum
+    assert_equal (-55612), person_expenses[4].cumulative_sum
   end
 end

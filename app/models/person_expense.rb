@@ -29,19 +29,25 @@ class PersonExpense < ApplicationRecord
       PersonExpense.joins("LEFT OUTER JOIN expenses ON expenses.id = person_expenses.expense_id").
         joins("JOIN person_expenses AS pe2 ON expenses.id = pe2.expense_id").
         where("person_expenses.person_id = ? AND pe2.person_id = ?", first_person, second_person).
-        order("expenses.date desc", "expenses.updated_at desc")
+        order("expenses.date", "expenses.updated_at")
     end
   end
 
   private
     def set_cumulative_sums
       other_person = self.get_other_person_expense().person
-      previous_person_expenses = PersonExpense.find_for_person_with_other_person(self.person, other_person)
-      if previous_person_expenses.empty?
+      existing_person_expenses = PersonExpense.find_for_person_with_other_person(self.person, other_person)
+      if existing_person_expenses.empty?
         self.cumulative_sum = self.amount
       else
-        previous_person_expense = previous_person_expenses.first
+        person_expenses_before = existing_person_expenses.where("expenses.date <= ?", self.expense.date)
+        previous_person_expense = person_expenses_before.last
         self.cumulative_sum = self.amount + previous_person_expense.cumulative_sum
+        person_expenses_after = existing_person_expenses.where("expenses.date > ?", self.expense.date)
+        person_expenses_after.inject(self.cumulative_sum) do |sum, person_expense|
+          person_expense.update_columns(cumulative_sum: sum + person_expense.amount)
+          person_expense.cumulative_sum
+        end
       end
     end
 end
