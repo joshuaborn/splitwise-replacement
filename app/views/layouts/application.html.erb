@@ -34,7 +34,16 @@
         </div>
         <div class="navbar-menu" data-burger-target="menu">
           <div class="navbar-start">
-            <%= link_to 'User Management', people_path, class: 'navbar-item' if @current_user.present? and @current_user.is_administrator? %>
+            <%=
+              unless current_page?(controller: 'expenses') or current_page?(root_path)
+                link_to 'Transactions', expenses_path, class: 'navbar-item'
+              end
+            -%>
+            <%=
+              if @current_user.present? and @current_user.is_administrator? and !current_page?(controller: 'people')
+                link_to 'User Management', people_path, class: 'navbar-item'
+              end
+            -%>
           </div>
           <div class="navbar-end">
             <% if @current_user %>
