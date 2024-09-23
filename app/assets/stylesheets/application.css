@@ -1,4 +1,7 @@
 nav {
     border-bottom: 1px solid gray;
-    margin-bottom: 1rem;
+}
+
+.navbar-menu.is-active {
+    border-top: 1px solid gray;
 }
