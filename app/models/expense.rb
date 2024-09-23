@@ -15,9 +15,9 @@ class Expense < ApplicationRecord
   end
 
   class << self
-    def split_between_two_people(date, payer, ower, dollar_amount)
-      expense = Expense.new(date: date, dollar_amount_paid: dollar_amount)
-      half_amount = (dollar_amount * 100) / 2
+    def split_between_two_people(payer, ower, **attrs)
+      expense = Expense.new(**attrs)
+      half_amount = expense.amount_paid.to_f / 2
       if half_amount % 1 == 0 then
         expense.person_expenses.new(person: ower, amount: -half_amount)
         expense.person_expenses.new(person: payer, amount: half_amount)
