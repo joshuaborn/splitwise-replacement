@@ -5,3 +5,9 @@ nav {
 .navbar-menu.is-active {
     border-top: 1px solid gray;
 }
+
+.navbar-item.title {
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+}
