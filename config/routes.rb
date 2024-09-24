@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resource :login, only: [ :new, :create, :destroy ]
-  resources :expenses, only: [ :index ]
+  resources :expenses, only: [ :index, :new ]
   resources :people, except: [ :show ]
   root "expenses#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
