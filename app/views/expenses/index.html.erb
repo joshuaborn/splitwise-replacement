@@ -8,18 +8,24 @@
     <% end %>
   </div>
 <% end %>
-<turbo-frame id="new_expense">
-  <div class="block">
-      <%= link_to new_expense_path, class: "button is-hidden-touch is-primary" do %>
+<div class="container buttons is-hidden-touch my-0" id="action-bar">
+  <turbo-frame id="new_expense_button">
+    <%= link_to new_expense_path, class: "button", "data-turbo-frame": "new_expense" do %>
       <span class="icon">
         <i class="fa-solid fa-plus"></i>
       </span>
       <span>New Transaction</span>
-      <% end %>
+    <% end %>
+  </turbo-frame>
+</div>
+<div class="columns container">
+  <div id="expenses" class="column is-half py-0">
+    <% @expenses.each do |expense| %>
+      <%= render expense %>
+    <% end %>
   </div>
-</turbo-frame>
-<div id="expenses" class="block">
-  <% @expenses.each do |expense| %>
-    <%= render expense %>
-  <% end %>
+  <div id="edit-panel" class="column is-half py-0">
+    <turbo-frame id="new_expense">
+    </turbo-frame>
+  </div>
 </div>

@@ -49,12 +49,12 @@
           </div>
           <div class="navbar-end">
             <% if @current_user %>
-              <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
+              <div class="navbar-item has-dropdown is-hoverable dropdown">
+                <a class="navbar-link dropdown-trigger">
                   <%= @current_user.name %>
                 </a>
                 <div class="navbar-dropdown">
-                  <%= button_to 'Logout', login_path, method: 'delete', class: 'navbar-item' %>
+                    <%= button_to 'Logout', login_path, method: 'delete', class: 'navbar-item dropdown-item' %>
                 </div>
               </div>
             <% end %>
@@ -69,8 +69,6 @@
         </div>
       <% end %>
     <% end %>
-    <section class="section container">
-      <%= yield %>
-    </section>
+    <%= yield %>
   </body>
 </html>

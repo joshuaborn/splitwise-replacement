@@ -1,3 +1,28 @@
 <%= turbo_frame_tag @expense do %>
-    Hello, world.
+  <div class="card">
+      <header class="card-header">
+        <p class="card-header-title">New Transaction</p>
+        <a href="#" class="card-header-icon">
+          <span class="icon">
+            <i class="fa-solid fa-xmark fa-lg has-text-link"></i>
+          </span>
+        </a>
+      </header>
+      <div class="card-content">
+        <div class="content">
+          <%= form_with model: @expense do |form| %>
+            <div class="field">
+              <%= form.label :payee, 'Payee', class: 'label' %>
+              <div class="control">
+                  <%= form.text_field :payee, class: 'input' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <footer class="card-footer">
+        <a href="#" class="card-footer-item">Create</a>
+        <a href="#" class="card-footer-item">Cancel</a>
+      </footer>
+  </div>
 <% end %>
