@@ -1,21 +1,23 @@
 <% content_for :title, 'Transactions' %>
 <% content_for :navbar_action do %>
   <div class="navbar-item is-hidden-desktop">
-    <%= link_to new_expense_path do %>
+    <%= link_to new_expense_path, "data-turbo-frame": "new_expense" do %>
       <span class="icon">
         <i class="fa-solid fa-plus fa-lg has-text-link"></i>
       </span>
     <% end %>
   </div>
 <% end %>
-<div class="block">
-    <%= link_to new_expense_path, class: "button is-hidden-touch is-primary" do %>
-    <span class="icon">
-      <i class="fa-solid fa-plus"></i>
-    </span>
-    <span>New Transaction</span>
-    <% end %>
-</div>
+<turbo-frame id="new_expense">
+  <div class="block">
+      <%= link_to new_expense_path, class: "button is-hidden-touch is-primary" do %>
+      <span class="icon">
+        <i class="fa-solid fa-plus"></i>
+      </span>
+      <span>New Transaction</span>
+      <% end %>
+  </div>
+</turbo-frame>
 <div id="expenses" class="block">
   <% @expenses.each do |expense| %>
     <%= render expense %>

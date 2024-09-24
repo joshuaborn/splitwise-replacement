@@ -11,4 +11,9 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Please log in to access this page.", flash[:warning]
     assert_redirected_to new_login_url
   end
+  test "should get new" do
+    post login_path, params: { person_id: people(:user_one).id }
+    get new_expense_path
+    assert_response :success
+  end
 end
