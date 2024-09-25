@@ -16,4 +16,14 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
     get new_expense_path
     assert_response :success
   end
+  test "should get a list of people with which to create a new transaction who aren't the current user" do
+    post login_path, params: { person_id: people(:user_one).id }
+    get new_expense_path
+    assert_select "select#person_id option" do |elements|
+      Person.where.not(id: people(:user_one)).all.each_with_index do |person, i|
+        assert_equal elements[i].text, person.name
+        assert_equal elements[i].attribute("value").value, person.id.to_s
+      end
+    end
+  end
 end

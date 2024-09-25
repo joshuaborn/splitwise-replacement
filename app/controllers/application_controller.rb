@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :require_login
+  default_form_builder BulmaFormBuilder
 
   private
     def logged_in?
