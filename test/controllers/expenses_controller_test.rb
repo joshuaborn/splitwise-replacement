@@ -26,4 +26,64 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
       end
     end
   end
+  test "create when current_user paid and is splitting with other person" do
+    post login_path, params: { person_id: people(:user_one).id }
+    parameters = {
+      person_paid: "current",
+      person: { id: people(:user_two).id },
+      expense: {
+        payee: "Acme, Inc.",
+        memo: "widgets",
+        date: "2024-09-25",
+        dollar_amount_paid: "4.3"
+      }
+    }
+    assert_difference("Expense.count") do
+      post expenses_path, params: parameters
+    end
+    assert_equal "Transaction was successfully created.", flash[:info]
+    parameters[:expense].each do |key, val|
+      assert_equal val, Expense.last.send(key).to_s
+    end
+    assert_redirected_to expenses_path
+  end
+  test "create when other person paid and is splitting with current_user" do
+    post login_path, params: { person_id: people(:user_one).id }
+    parameters = {
+      person_paid: "other",
+      person: { id: people(:user_two).id },
+      expense: {
+        payee: "Acme, Inc.",
+        memo: "widgets",
+        date: "2024-09-25",
+        dollar_amount_paid: "4.3"
+      }
+    }
+    assert_difference("Expense.count") do
+      post expenses_path, params: parameters
+    end
+    assert_equal "Transaction was successfully created.", flash[:info]
+    parameters[:expense].each do |key, val|
+      assert_equal val, Expense.last.send(key).to_s
+    end
+    assert_redirected_to expenses_path
+  end
+  test "raises an error person_paid parameter is invalid on create" do
+    post login_path, params: { person_id: people(:user_one).id }
+    parameters = {
+      person_paid: "foobar",
+      person: { id: people(:user_two).id },
+      expense: {
+        payee: "Acme, Inc.",
+        memo: "widgets",
+        date: "2024-09-25",
+        dollar_amount_paid: "4.3"
+      }
+    }
+    assert_no_difference("Expense.count") do
+      assert_raises(StandardError) do
+        post expenses_path, params: parameters
+      end
+    end
+  end
 end

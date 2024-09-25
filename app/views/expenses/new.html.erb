@@ -1,5 +1,5 @@
 <%= turbo_frame_tag @expense do %>
-  <div class="card">
+  <div class="card" data-controller="card">
       <header class="card-header">
         <p class="card-header-title">New Transaction</p>
         <a href="#" class="card-header-icon">
@@ -10,7 +10,7 @@
       </header>
       <div class="card-content">
         <div class="content">
-          <%= form_with model: @expense do |form| %>
+          <%= form_with model: @expense, html: { "data-card-target": "form" } do |form| %>
             <%= form.bulma_form_element :number_field, :dollar_amount_paid, step: 0.01, min: 0,
               icon_left: "fa-solid fa-dollar-sign", no_label: true %>
             <div class="field">
@@ -43,7 +43,7 @@
         </div>
       </div>
       <footer class="card-footer">
-        <a href="#" class="card-footer-item">Create</a>
+        <a href="#" class="card-footer-item" data-action="click->card#submit">Create</a>
         <a href="#" class="card-footer-item">Cancel</a>
       </footer>
   </div>

@@ -27,7 +27,7 @@ class ExpenseTest < ActiveSupport::TestCase
     assert_equal 7.31, Expense.new(amount_paid: 731).dollar_amount_paid
   end
   test "setting amount_paid in dollars" do
-    assert_equal 731, Expense.new(dollar_amount_paid: 7.31).amount_paid
+    assert_equal 731, Expense.new(dollar_amount_paid: "7.31").amount_paid
   end
   test "creating an Expense by splitting between two people" do
     expense = Expense.split_between_two_people(
