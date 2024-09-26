@@ -2,22 +2,38 @@ require "test_helper"
 
 class ExpenseTest < ActiveSupport::TestCase
   test "Expense should not validate without at least two valid PersonExpenses" do
-    expense = Expense.new(amount_paid: 10.00)
+    expense = Expense.new(
+      payee: "Acme, Inc.",
+      date: "2024-09-25",
+      amount_paid: 10.00
+    )
     assert_not expense.valid?
     assert_includes expense.errors.messages[:person_expenses], "is too short (minimum is 2 characters)"
 
-    expense = Expense.new(amount_paid: 11.00)
+    expense = Expense.new(
+      payee: "Acme, Inc.",
+      date: "2024-09-25",
+      amount_paid: 11.00
+    )
     expense.person_expenses.new(person: people(:user_one), amount: 5.50)
     assert_not expense.valid?
     assert_includes expense.errors.messages[:person_expenses], "is too short (minimum is 2 characters)"
 
-    expense = Expense.new(amount_paid: 11.00)
+    expense = Expense.new(
+      payee: "Acme, Inc.",
+      date: "2024-09-25",
+      amount_paid: 11.00
+    )
     expense.person_expenses.new(person: people(:user_one), amount: 5.50)
     expense.person_expenses.new(person: people(:user_two), amount: 5.50)
     assert expense.valid?
     assert_not_includes expense.errors.messages[:person_expenses], "is too short (minimum is 2 characters)"
 
-    expense = Expense.new(amount_paid: 11.00)
+    expense = Expense.new(
+      payee: "Acme, Inc.",
+      date: "2024-09-25",
+      amount_paid: 11.00
+    )
     expense.person_expenses.new(person: people(:user_one), amount: 5.50)
     expense.person_expenses.new(person: people(:user_two))
     assert_not expense.valid?
@@ -33,6 +49,7 @@ class ExpenseTest < ActiveSupport::TestCase
     expense = Expense.split_between_two_people(
       people(:user_one),
       people(:user_two),
+      payee: "Acme, Inc.",
       date: "2024-09-24",
       dollar_amount_paid: 10.00
     )
@@ -45,6 +62,7 @@ class ExpenseTest < ActiveSupport::TestCase
     expense = Expense.split_between_two_people(
       people(:user_one),
       people(:user_two),
+      payee: "Acme, Inc.",
       date: "2024-09-25",
       dollar_amount_paid: 7.31
     )
@@ -57,6 +75,7 @@ class ExpenseTest < ActiveSupport::TestCase
     expense = Expense.split_between_two_people(
       people(:user_one),
       people(:user_two),
+      payee: "Acme, Inc.",
       date: "2024-09-26",
       dollar_amount_paid: 7.31
     )
@@ -76,9 +95,9 @@ class ExpenseTest < ActiveSupport::TestCase
     expense = Expense.split_between_two_people(
       people(:user_one),
       people(:user_two),
+      payee: "Acme, Inc.",
       date: "2024-09-26",
       dollar_amount_paid: 7.31,
-      payee: "Acme, Inc.",
       memo: "widgets"
     )
     assert_equal Date.new(2024, 9, 26), expense.date
@@ -90,9 +109,9 @@ class ExpenseTest < ActiveSupport::TestCase
     expense = Expense.split_between_two_people(
       people(:user_one),
       people(:user_two),
+      payee: "Acme, Inc.",
       date: "2024-09-26",
       amount_paid: 731,
-      payee: "Acme, Inc.",
       memo: "widgets"
     )
     assert_equal Date.new(2024, 9, 26), expense.date

@@ -1,5 +1,6 @@
-<%= turbo_frame_tag @expense do %>
+<%= turbo_frame_tag "new_expense" do %>
   <div class="card" data-controller="card">
+    <%= form_with model: @expense, html: { "data-card-target": "form" } do |form| %>
       <header class="card-header">
         <p class="card-header-title">New Transaction</p>
         <a href="#" class="card-header-icon">
@@ -10,41 +11,40 @@
       </header>
       <div class="card-content">
         <div class="content">
-          <%= form_with model: @expense, html: { "data-card-target": "form" } do |form| %>
-            <%= form.bulma_form_element :number_field, :dollar_amount_paid, step: 0.01, min: 0,
-              icon_left: "fa-solid fa-dollar-sign", no_label: true %>
-            <div class="field">
-              <div class="control">
-                <label class="radio">
-                  <input type="radio" name="person_paid" value="current" checked="checked">
-                  paid by you and split with...
-                </label><br/>
-                <label class="radio">
-                  <input type="radio" name="person_paid" value="other">
-                  paid by...
-                </label>
-              </div>
+          <%= form.bulma_form_element :number_field, :dollar_amount_paid, step: 0.01, min: 0,
+            icon_left: "fa-solid fa-dollar-sign", no_label: true %>
+          <div class="field">
+            <div class="control">
+              <label class="radio">
+                <input type="radio" name="person_paid" value="current" checked="checked">
+                paid by you and split with...
+              </label><br/>
+              <label class="radio">
+                <input type="radio" name="person_paid" value="other">
+                paid by...
+              </label>
             </div>
-            <div class="field">
-              <div class="control has-icons-left has-icons-right">
-                <%= collection_select :person, :id, @people, :id, :name, {}, { class: "input" } %>
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-right">
-                  <i class="fa-solid fa-caret-down"></i>
-                </span>
-              </div>
+          </div>
+          <div class="field">
+            <div class="control has-icons-left has-icons-right">
+              <%= collection_select :person, :id, @people, :id, :name, {}, { class: "input" } %>
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+              <span class="icon is-right">
+                <i class="fa-solid fa-caret-down"></i>
+              </span>
             </div>
-            <%= form.bulma_form_element :date_field, :date %>
-            <%= form.bulma_form_element :text_field, :payee %>
-            <%= form.bulma_form_element :text_field, :memo %>
-          <% end %>
+          </div>
+          <%= form.bulma_form_element :date_field, :date %>
+          <%= form.bulma_form_element :text_field, :payee %>
+          <%= form.bulma_form_element :text_field, :memo %>
         </div>
       </div>
       <footer class="card-footer">
-        <a href="#" class="card-footer-item" data-action="click->card#submit">Create</a>
+        <%= form.submit "Create", class: "card-footer-item button is-link" %>
         <a href="#" class="card-footer-item">Cancel</a>
       </footer>
+    <% end %>
   </div>
 <% end %>

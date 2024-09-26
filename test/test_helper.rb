@@ -15,48 +15,56 @@ module ActiveSupport
       Expense.split_between_two_people(
         people(:user_one),
         people(:user_two),
+        payee: "Acme, Inc.",
         date: "2024-09-20",
         dollar_amount_paid: 6.52
       ).save!
       Expense.split_between_two_people(
         people(:user_one),
         people(:user_two),
+        payee: "Acme, Inc.",
         date: "2024-09-21",
         dollar_amount_paid: 8.88
       ).save!
       Expense.split_between_two_people(
         people(:user_two),
         people(:user_one),
+        payee: "Acme, Inc.",
         date: "2024-09-21",
         dollar_amount_paid: 105.22
       ).save!
       Expense.split_between_two_people(
         people(:user_two),
         people(:user_one),
+        payee: "Acme, Inc.",
         date: "2024-09-22",
         dollar_amount_paid: 1032.41
       ).save!
       Expense.split_between_two_people(
         people(:administrator),
         people(:user_one),
+        payee: "Acme, Inc.",
         date: "2024-09-23",
         dollar_amount_paid: 923.23
       ).save!
       Expense.split_between_two_people(
         people(:user_one),
         people(:administrator),
+        payee: "Acme, Inc.",
         date: "2024-09-24",
         dollar_amount_paid: 28.01
       ).save!
       Expense.split_between_two_people(
         people(:administrator),
         people(:user_two),
+        payee: "Acme, Inc.",
         date: "2024-09-25",
         dollar_amount_paid: 237.31
       ).save!
       Expense.split_between_two_people(
         people(:user_two),
         people(:administrator),
+        payee: "Acme, Inc.",
         date: "2024-09-25",
         dollar_amount_paid: 38.45
       ).save!

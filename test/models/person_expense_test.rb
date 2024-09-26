@@ -21,6 +21,7 @@ class PersonExpenseTest < ActiveSupport::TestCase
     expense = Expense.split_between_two_people(
       people(:user_one),
       people(:user_two),
+      payee: "Acme, Inc.",
       date: "2024-09-21",
       dollar_amount_paid: 6.52
     )
@@ -36,6 +37,7 @@ class PersonExpenseTest < ActiveSupport::TestCase
     Expense.split_between_two_people(
       people(:user_one),
       people(:user_two),
+      payee: "Acme, Inc.",
       date: "2024-09-21",
       dollar_amount_paid: 6.52
     ).save!
@@ -55,6 +57,7 @@ class PersonExpenseTest < ActiveSupport::TestCase
     expense = Expense.split_between_two_people(
       people(:user_one),
       people(:user_two),
+      payee: "Acme, Inc.",
       date: "2024-09-26",
       dollar_amount_paid: 10.00
     )
@@ -68,6 +71,7 @@ class PersonExpenseTest < ActiveSupport::TestCase
     Expense.split_between_two_people(
       people(:user_one),
       people(:user_two),
+      payee: "Acme, Inc.",
       date: "2024-09-20",
       dollar_amount_paid: 10.00
     ).save!
@@ -83,6 +87,7 @@ class PersonExpenseTest < ActiveSupport::TestCase
     expense = Expense.split_between_two_people(
       people(:user_one),
       people(:user_two),
+      payee: "Acme, Inc.",
       date: "2024-09-21",
       dollar_amount_paid: 6.51
     )

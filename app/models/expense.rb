@@ -2,7 +2,8 @@ class Expense < ApplicationRecord
   has_many :person_expenses, -> { includes :person }, dependent: :destroy
   has_many :people, through: :person_expenses
 
-  validates :amount_paid, presence: true
+  validates :payee, :date, presence: true
+  validates :dollar_amount_paid, comparison: { greater_than: 0 }
   validates :person_expenses, length: { minimum: 2 }
   validates_associated :person_expenses
 
