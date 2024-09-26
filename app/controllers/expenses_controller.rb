@@ -1,6 +1,6 @@
 class ExpensesController < ApplicationController
   def index
-    @expenses = Expense.all
+    @person_expenses = @current_user.person_expenses.includes(:expense).order(expenses: { date: :desc })
   end
 
   def new

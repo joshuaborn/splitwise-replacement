@@ -1,5 +1,5 @@
 class Expense < ApplicationRecord
-  has_many :person_expenses, -> { includes :person }, dependent: :destroy
+  has_many :person_expenses, dependent: :destroy
   has_many :people, through: :person_expenses
 
   validates :payee, :date, presence: true

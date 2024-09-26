@@ -16,12 +16,16 @@ class PersonExpense < ApplicationRecord
     self.amount = (100 * dollars).to_i
   end
 
-  def get_other_person_expense
+  def other_person_expense
     if self.persisted?
       self.expense.person_expenses.where.not(person: self.person).first
     else
       self.expense.person_expenses.detect { |person_expense| person_expense.person_id != self.person_id }
     end
+  end
+
+  def other_person
+    self.other_person_expense.person
   end
 
   def dollar_cumulative_sum
@@ -39,7 +43,7 @@ class PersonExpense < ApplicationRecord
 
   private
     def set_cumulative_sums
-      other_person = self.get_other_person_expense().person
+      other_person = self.other_person_expense().person
       existing_person_expenses = PersonExpense.find_for_person_with_other_person(self.person, other_person)
       if existing_person_expenses.empty?
         self.cumulative_sum = self.amount

@@ -8,24 +8,36 @@
     <% end %>
   </div>
 <% end %>
-<div class="container buttons is-hidden-touch my-0" id="action-bar">
-  <turbo-frame id="new_expense_button">
-    <%= link_to new_expense_path, class: "button", "data-turbo-frame": "new_expense" do %>
-      <span class="icon">
-        <i class="fa-solid fa-plus"></i>
-      </span>
-      <span>New Transaction</span>
-    <% end %>
-  </turbo-frame>
-</div>
-<div class="columns container">
-  <div id="expenses" class="column is-half py-0">
-    <% @expenses.each do |expense| %>
-      <%= render expense %>
-    <% end %>
+<div class="is-hidden-touch my-0" id="action-bar">
+  <div class="container buttons">
+    <turbo-frame id="new_expense_button">
+      <%= link_to new_expense_path, class: "button", "data-turbo-frame": "new_expense" do %>
+        <span class="icon">
+          <i class="fa-solid fa-plus"></i>
+        </span>
+        <span>New Transaction</span>
+      <% end %>
+    </turbo-frame>
   </div>
-  <div id="edit-panel" class="column is-half py-0">
+</div>
+<div class="columns is-desktop is-gapless">
+  <div id="edit-panel" class="column is-one-quarter-desktop">
     <turbo-frame id="new_expense">
     </turbo-frame>
+  </div>
+  <div id="main-panel" class="column is-three-quarters-desktop">
+    <div id="expenses" class="fixed-grid has-3-cols-mobile has-7-cols-tablet">
+      <div class="headings grid is-gap-0 is-hidden-mobile">
+        <div class="cell">Date</div>
+        <div class="cell">Payee</div>
+        <div class="cell">Memo</div>
+        <div class="cell has-text-right">Total</div>
+        <div class="cell is-col-span-2 has-text-right">Amount Owed</div>
+        <div class="cell has-text-right">Cumulative Sum</div>
+      </div>
+      <% @person_expenses.each do |person_expense| %>
+        <%= render person_expense %>
+      <% end %>
+    </div>
   </div>
 </div>

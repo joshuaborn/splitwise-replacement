@@ -1,0 +1,22 @@
+<% expense = person_expense.expense %>
+<div class="date is-hidden-tablet">
+    <%= expense.date %>
+</div>
+<div id="<%= dom_id expense %>" class="grid person-expense is-gap-0">
+    <div class="cell expense-date is-hidden-mobile">
+        <%= expense.date %>
+    </div>
+    <div class="cell expense-payee">
+        <%= expense.payee %>
+    </div>
+    <div class="cell expense-memo is-row-start-2-mobile">
+        <%= expense.memo %>
+    </div>
+    <div class="cell expense-dollar-amount-paid is-col-span-2-mobile has-text-right">
+        <%= number_to_currency(expense.dollar_amount_paid) %>
+    </div>
+    <div class="cell person-expense-dollar-amount is-col-span-2 has-text-right">
+        <%= number_to_currency(person_expense.dollar_amount ) %> owed <%= person_expense.amount < 0 ? "to" : "by" %> <%= person_expense.other_person.name %>
+    </div>
+    <div class="cell person-expense-dollar-cumulative-sum has-text-right is-hidden-mobile"><%= number_to_currency(person_expense.dollar_cumulative_sum) %></div>
+</div>

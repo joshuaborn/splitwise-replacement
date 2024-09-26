@@ -27,11 +27,27 @@ class PersonExpenseTest < ActiveSupport::TestCase
     )
     this_person_expense = expense.person_expenses.detect { |person_expense| person_expense.person_id == people(:user_one).id }
     assert_equal people(:user_one), this_person_expense.person
-    other_person_expense = this_person_expense.get_other_person_expense()
+    other_person_expense = this_person_expense.other_person_expense()
     assert_equal people(:user_two), other_person_expense.person
     expense.save!
-    other_person_expense = this_person_expense.get_other_person_expense()
+    other_person_expense = this_person_expense.other_person_expense()
     assert_equal people(:user_two), other_person_expense.person
+  end
+  test "getting of Person associated Expense associated with this PersonExpense" do
+    expense = Expense.split_between_two_people(
+      people(:user_one),
+      people(:user_two),
+      payee: "Acme, Inc.",
+      date: "2024-09-21",
+      dollar_amount_paid: 6.52
+    )
+    this_person_expense = expense.person_expenses.detect { |person_expense| person_expense.person_id == people(:user_one).id }
+    assert_equal people(:user_one), this_person_expense.person
+    other_person = this_person_expense.other_person()
+    assert_equal people(:user_two), other_person
+    expense.save!
+    other_person = this_person_expense.other_person()
+    assert_equal people(:user_two), other_person
   end
   test "when a PersonExpense is first created between two people, the amount owed becomes the cumulative sum" do
     Expense.split_between_two_people(
