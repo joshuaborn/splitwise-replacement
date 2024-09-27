@@ -19,10 +19,10 @@ class ExpensesController < ApplicationController
     end
     if @expense.save
       flash[:info] = "Transaction was successfully created."
-      redirect_to expenses_path
+      render turbo_stream: turbo_stream.action(:refresh, "")
     else
       @people = Person.where.not(id: @current_user).all
-      render :new
+      render :new, status: 422
     end
   end
 

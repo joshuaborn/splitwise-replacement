@@ -45,7 +45,8 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
     parameters[:expense].each do |key, val|
       assert_equal val, Expense.last.send(key).to_s
     end
-    assert_redirected_to expenses_path
+    assert_response :success
+    assert_select 'turbo-stream[action="refresh"]'
   end
   test "create when other person paid and is splitting with current_user" do
     post login_path, params: { person_id: people(:user_one).id }
@@ -66,7 +67,8 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
     parameters[:expense].each do |key, val|
       assert_equal val, Expense.last.send(key).to_s
     end
-    assert_redirected_to expenses_path
+    assert_response :success
+    assert_select 'turbo-stream[action="refresh"]'
   end
   test "raises an error person_paid parameter is invalid on create" do
     post login_path, params: { person_id: people(:user_one).id }
