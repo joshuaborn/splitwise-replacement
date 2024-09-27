@@ -1,4 +1,6 @@
 class ExpensesController < ApplicationController
+  layout "side_frame"
+
   def index
     @person_expenses = @current_user.person_expenses.includes(:expense).order(expenses: { date: :desc })
   end
@@ -6,6 +8,7 @@ class ExpensesController < ApplicationController
   def new
     @expense = Expense.new
     @people = Person.where.not(id: @current_user).all
+    render layout: false
   end
 
   def create

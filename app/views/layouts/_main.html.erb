@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Splitwise Replacement" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/60cf2ed680.js" crossorigin="anonymous"></script>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation" data-controller="burger">
+      <div class="container">
+        <div class="navbar-brand">
+          <h2 class="navbar-item title">
+            <%= yield :title %>
+          </h2>
+          <%= yield :navbar_action %>
+          <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-burger-target="burger" data-action="click->burger#toggle">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+        <div class="navbar-menu" data-burger-target="menu">
+          <div class="navbar-start">
+            <%=
+              unless current_page?(controller: 'expenses') or current_page?(root_path)
+                link_to 'Transactions', expenses_path, class: 'navbar-item'
+              end
+            -%>
+            <%=
+              if @current_user.present? and @current_user.is_administrator? and !current_page?(controller: 'people')
+                link_to 'User Management', people_path, class: 'navbar-item'
+              end
+            -%>
+          </div>
+          <div class="navbar-end">
+            <% if @current_user %>
+              <div class="navbar-item has-dropdown is-hoverable dropdown">
+                <a class="navbar-link dropdown-trigger">
+                  <%= @current_user.name %>
+                </a>
+                <div class="navbar-dropdown">
+                    <%= button_to 'Logout', login_path, method: 'delete', class: 'navbar-item dropdown-item' %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <%= yield :content %>
+  </body>
+</html>

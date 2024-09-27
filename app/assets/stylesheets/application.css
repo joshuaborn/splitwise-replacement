@@ -26,8 +26,12 @@ nav, .card-header {
   padding: 10px 12px;
 }
 
+.notification {
+  margin: 1rem;
+}
+
 @media screen and (max-width: 1023px) {
-  #edit-panel {
+  #side-panel {
     padding: 0;
 
     .card {
@@ -58,13 +62,13 @@ nav, .card-header {
 @media screen and (max-width: 768px) {
   #expenses .date {
     background-color: hsl(0, 0%, 7%);
+    border-top: 1px solid hsl(221,14%,24%);
     color: hsl(0, 0%, 88%);
     padding: 0.25rem 1rem;
     font-size: 0.9rem;
   }
 
   .grid.person-expense {
-    border-bottom: 1px solid hsl(221,14%,24%);
     border-top: 1px solid hsl(221,14%,24%);
     margin-bottom: 0;
     padding: 0.25rem 0.5rem;
