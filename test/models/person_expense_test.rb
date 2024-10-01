@@ -27,11 +27,8 @@ class PersonExpenseTest < ActiveSupport::TestCase
     )
     this_person_expense = expense.person_expenses.detect { |person_expense| person_expense.person_id == people(:user_one).id }
     assert_equal people(:user_one), this_person_expense.person
-    other_person_expense = this_person_expense.other_person_expense()
-    assert_equal people(:user_two), other_person_expense.person
     expense.save!
-    other_person_expense = this_person_expense.other_person_expense()
-    assert_equal people(:user_two), other_person_expense.person
+    assert_equal people(:user_two), this_person_expense.other_person
   end
   test "getting of Person associated Expense associated with this PersonExpense" do
     expense = Expense.split_between_two_people(
@@ -43,8 +40,6 @@ class PersonExpenseTest < ActiveSupport::TestCase
     )
     this_person_expense = expense.person_expenses.detect { |person_expense| person_expense.person_id == people(:user_one).id }
     assert_equal people(:user_one), this_person_expense.person
-    other_person = this_person_expense.other_person()
-    assert_equal people(:user_two), other_person
     expense.save!
     other_person = this_person_expense.other_person()
     assert_equal people(:user_two), other_person

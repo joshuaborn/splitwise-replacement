@@ -1,6 +1,8 @@
 class PersonExpense < ApplicationRecord
   belongs_to :person
   belongs_to :expense
+  has_many :person_expenses, through: :expense
+  has_many :people, through: :person_expenses, source: :person
 
   validates :person, presence: true
   validates :expense, presence: true
@@ -17,15 +19,11 @@ class PersonExpense < ApplicationRecord
   end
 
   def other_person_expense
-    if self.persisted?
-      self.expense.person_expenses.where.not(person: self.person).first
-    else
-      self.expense.person_expenses.detect { |person_expense| person_expense.person_id != self.person_id }
-    end
+    self.person_expenses.detect { |person_expense| person_expense.person_id != self.person_id }
   end
 
   def other_person
-    self.other_person_expense.person
+    self.people.detect { |person| person.id != self.person_id }
   end
 
   def dollar_cumulative_sum
@@ -43,7 +41,7 @@ class PersonExpense < ApplicationRecord
 
   private
     def set_cumulative_sums
-      other_person = self.other_person_expense().person
+      other_person = self.expense.person_expenses.detect { |person_expense| person_expense.person_id != self.person_id }.person
       existing_person_expenses = PersonExpense.find_for_person_with_other_person(self.person, other_person)
       if existing_person_expenses.empty?
         self.cumulative_sum = self.amount

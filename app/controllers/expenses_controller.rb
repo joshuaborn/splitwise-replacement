@@ -2,7 +2,7 @@ class ExpensesController < ApplicationController
   layout "side_frame"
 
   def index
-    @person_expenses = @current_user.person_expenses.includes(:expense).order(expenses: { date: :desc })
+    @person_expenses = @current_user.person_expenses.includes(:expense, :person_expenses, :people).order(expenses: { date: :desc })
   end
 
   def new
