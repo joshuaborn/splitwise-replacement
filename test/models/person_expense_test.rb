@@ -93,6 +93,23 @@ class PersonExpenseTest < ActiveSupport::TestCase
     assert_equal (-3991), person_expenses[3].cumulative_sum
     assert_equal (-55612), person_expenses[4].cumulative_sum
   end
+  test "when a PersonExpense is saved before all others, its cumulative_sum is set to its own amount" do
+    srand(9192031)
+    build_expenses_for_tests()
+    Expense.split_between_two_people(
+      people(:user_one),
+      people(:user_two),
+      payee: "Acme, Inc.",
+      date: "2024-01-01",
+      dollar_amount_paid: 2.00
+    ).save!
+    person_expenses = PersonExpense.find_for_person_with_other_person(people(:user_one), people(:user_two))
+    assert_equal 100, person_expenses[0].cumulative_sum
+    assert_equal 426, person_expenses[1].cumulative_sum
+    assert_equal 870, person_expenses[2].cumulative_sum
+    assert_equal (-4391), person_expenses[3].cumulative_sum
+    assert_equal (-56012), person_expenses[4].cumulative_sum
+  end
   test "getting cumulative_sum in dollars" do
     srand(9192031)
     expense = Expense.split_between_two_people(

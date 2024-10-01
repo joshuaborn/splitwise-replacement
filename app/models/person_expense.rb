@@ -43,15 +43,15 @@ class PersonExpense < ApplicationRecord
     def set_cumulative_sums
       other_person = self.expense.person_expenses.detect { |person_expense| person_expense.person_id != self.person_id }.person
       existing_person_expenses = PersonExpense.find_for_person_with_other_person(self.person, other_person)
-      if existing_person_expenses.empty?
+      if existing_person_expenses.where("expenses.date <= ?", self.expense.date).empty?
         self.cumulative_sum = self.amount
       else
         previous_person_expense = existing_person_expenses.where("expenses.date <= ?", self.expense.date).last
         self.cumulative_sum = self.amount + previous_person_expense.cumulative_sum
-        existing_person_expenses.where("expenses.date > ?", self.expense.date).inject(self.cumulative_sum) do |sum, person_expense|
-          person_expense.update_columns(cumulative_sum: sum + person_expense.amount)
-          person_expense.cumulative_sum
-        end
+      end
+      existing_person_expenses.where("expenses.date > ?", self.expense.date).inject(self.cumulative_sum) do |sum, person_expense|
+        person_expense.update_columns(cumulative_sum: sum + person_expense.amount)
+        person_expense.cumulative_sum
       end
     end
 end
