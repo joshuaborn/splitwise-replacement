@@ -28,7 +28,16 @@
     <div class="cell is-col-span-2 has-text-right">Amount Owed</div>
     <div class="cell has-text-right">Cumulative Sum</div>
   </div>
-  <% @person_expenses.each do |person_expense| %>
-    <%= render person_expense %>
+  <% last_date = nil %>
+  <% group_by_date(@person_expenses).each do |this_date, person_expense_list| %>
+    <% if this_date != last_date %>
+      <% last_date = this_date %>
+      <div class="date is-hidden-tablet">
+        <%= this_date %>
+      </div>
+    <% end %>
+    <% person_expense_list.each do |person_expense| %>
+      <%= render person_expense %>
+    <% end %>
   <% end %>
 </div>
