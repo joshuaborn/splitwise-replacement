@@ -19,7 +19,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="<%= yield :layout_name %>">
+  <body data-controller="action-bar" <%= yield :body_attributes %>>
     <nav id="navigation-bar" class="navbar" role="navigation" aria-label="main navigation" data-controller="burger">
       <div class="container">
         <div class="navbar-brand">

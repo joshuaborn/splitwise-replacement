@@ -3,7 +3,7 @@
     <%= form_with model: @expense, html: { "data-card-target": "form" } do |form| %>
       <header class="card-header">
         <p class="card-header-title">New Transaction</p>
-        <a href="#" class="card-header-icon">
+        <a href="#" class="card-header-icon" data-action="click->action-bar#enableNewTransaction">
           <span class="icon">
             <i class="fa-solid fa-xmark fa-lg has-text-link"></i>
           </span>
@@ -43,7 +43,7 @@
       </div>
       <footer class="card-footer">
         <%= form.submit "Create", class: "card-footer-item button is-link" %>
-        <a href="#" class="card-footer-item">Cancel</a>
+        <a href="#" class="card-footer-item" data-action="click->action-bar#enableNewTransaction">Cancel</a>
       </footer>
     <% end %>
   </div>

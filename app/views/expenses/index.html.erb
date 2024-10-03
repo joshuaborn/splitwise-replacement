@@ -10,12 +10,23 @@
 <% end %>
 <% content_for :action_bar do %>
   <div class="container buttons">
-    <%= link_to new_expense_path, class: "button", "data-turbo-frame": "side_panel_contents" do %>
+    <%= link_to new_expense_path,
+      class: "button",
+      "data-turbo-frame": "side_panel_contents",
+      "data-action": "click->action-bar#disableNewTransaction",
+      "data-action-bar-target": "enabledAdd" do
+    %>
       <span class="icon">
         <i class="fa-solid fa-plus"></i>
       </span>
       <span>New Transaction</span>
     <% end %>
+    <button class="button" data-action-bar-target="disabledAdd" style="display: none;" disabled="disabled">
+      <span class="icon">
+        <i class="fa-solid fa-plus"></i>
+      </span>
+      <span>New Transaction</span>
+    </button>
   </div>
 <% end %>
 

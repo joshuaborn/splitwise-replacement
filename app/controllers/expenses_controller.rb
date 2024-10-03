@@ -25,7 +25,7 @@ class ExpensesController < ApplicationController
       render turbo_stream: turbo_stream.action(:refresh, "")
     else
       @people = Person.where.not(id: @current_user).all
-      render :new, status: 422
+      render :new, status: 422, layout: false
     end
   end
 
