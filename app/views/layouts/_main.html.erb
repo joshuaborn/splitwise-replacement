@@ -19,8 +19,8 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <nav class="navbar" role="navigation" aria-label="main navigation" data-controller="burger">
+  <body class="<%= yield :layout_name %>">
+    <nav id="navigation-bar" class="navbar" role="navigation" aria-label="main navigation" data-controller="burger">
       <div class="container">
         <div class="navbar-brand">
           <h2 class="navbar-item title">

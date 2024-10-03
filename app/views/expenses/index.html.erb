@@ -19,25 +19,29 @@
   </div>
 <% end %>
 
-<div id="expenses" class="fixed-grid has-3-cols-mobile has-7-cols-tablet">
-  <div class="headings grid is-gap-0 is-hidden-mobile">
-    <div class="cell">Date</div>
-    <div class="cell">Payee</div>
-    <div class="cell">Memo</div>
-    <div class="cell has-text-right">Total</div>
-    <div class="cell is-col-span-2 has-text-right">Amount Owed</div>
-    <div class="cell has-text-right">Cumulative Sum</div>
+<div class="expenses">
+  <div class="expenses-headings fixed-grid has-3-cols-mobile has-7-cols-tablet">
+    <div class="grid is-gap-0 is-hidden-mobile">
+      <div class="cell">Date</div>
+      <div class="cell">Payee</div>
+      <div class="cell">Memo</div>
+      <div class="cell has-text-right">Total</div>
+      <div class="cell is-col-span-2 has-text-right">Amount Owed</div>
+      <div class="cell has-text-right">Cumulative Sum</div>
+    </div>
   </div>
-  <% last_date = nil %>
-  <% group_by_date(@person_expenses).each do |this_date, person_expense_list| %>
-    <% if this_date != last_date %>
-      <% last_date = this_date %>
-      <div class="date is-hidden-tablet">
-        <%= this_date %>
-      </div>
+  <div class="expenses-content fixed-grid has-3-cols-mobile has-7-cols-tablet scroller">
+    <% last_date = nil %>
+    <% group_by_date(@person_expenses).each do |this_date, person_expense_list| %>
+      <% if this_date != last_date %>
+        <% last_date = this_date %>
+        <div class="date is-hidden-tablet">
+          <%= this_date %>
+        </div>
+      <% end %>
+      <% person_expense_list.each do |person_expense| %>
+        <%= render person_expense %>
+      <% end %>
     <% end %>
-    <% person_expense_list.each do |person_expense| %>
-      <%= render person_expense %>
-    <% end %>
-  <% end %>
+  </div>
 </div>
