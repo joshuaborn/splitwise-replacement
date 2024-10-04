@@ -70,6 +70,7 @@ nav, .card-header {
 
   .grid.person-expense {
     border-top: 1px solid hsl(221,14%,24%);
+    color: inherit;
     margin-bottom: 0;
     padding: 0.25rem 0.5rem;
     
