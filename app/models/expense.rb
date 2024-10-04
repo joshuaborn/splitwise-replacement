@@ -1,5 +1,6 @@
 class Expense < ApplicationRecord
   has_many :person_expenses, dependent: :destroy
+  accepts_nested_attributes_for :person_expenses
   has_many :people, through: :person_expenses
 
   validates :payee, :date, presence: true

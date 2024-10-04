@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "side_panel_contents" do %>
   <div class="card" data-controller="card">
-    <%= form_with model: @person_expense.expense do |form| %>
+    <%= form_with model: @expense do |form| %>
       <header class="card-header">
         <p class="card-header-title">Edit Transaction</p>
         <a href="#" class="card-header-icon">
@@ -11,6 +11,20 @@
       </header>
       <div class="card-content">
         <div class="content">
+          <%= form.bulma_form_element :number_field, :dollar_amount_paid, step: 0.01, min: 0, icon_left: "fa-solid fa-dollar-sign" %>
+          <%= form.fields_for :person_expenses do |subform| %>
+            <div class="field">
+              <% if subform.object.person == @current_user %>
+                <%= subform.label :dollar_amount, "Your Contribution", class: "label" %>
+              <% else %>
+                <%= subform.label :dollar_amount, subform.object.person.name + "'s Contribution", class: "label" %>
+              <% end %>
+              <div class="control has-icons-left">
+                <%= subform.number_field :dollar_amount, step: 0.01, icon_left: "fa-solid fa-dollar-sign", class: "input" %>
+                <span class="icon is-small is-left"><i class="fa-solid fa-dollar-sign" aria-hidden="true"></i></span>
+              </div>
+            </div>
+          <% end %>
           <%= form.bulma_form_element :date_field, :date %>
           <%= form.bulma_form_element :text_field, :payee %>
           <%= form.bulma_form_element :text_field, :memo %>

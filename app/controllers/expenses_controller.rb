@@ -30,7 +30,7 @@ class ExpensesController < ApplicationController
   end
 
   def edit
-    @person_expense = @current_user.person_expenses.find(params[:id])
+    @expense = @current_user.person_expenses.find(params[:id]).expense
     render layout: false
   end
 
