@@ -1,0 +1,25 @@
+<%= turbo_frame_tag "side_panel_contents" do %>
+  <div class="card" data-controller="card">
+    <%= form_with model: @person_expense.expense do |form| %>
+      <header class="card-header">
+        <p class="card-header-title">Edit Transaction</p>
+        <a href="#" class="card-header-icon">
+          <span class="icon">
+            <i class="fa-solid fa-xmark fa-lg has-text-link"></i>
+          </span>
+        </a>
+      </header>
+      <div class="card-content">
+        <div class="content">
+          <%= form.bulma_form_element :date_field, :date %>
+          <%= form.bulma_form_element :text_field, :payee %>
+          <%= form.bulma_form_element :text_field, :memo %>
+        </div>
+      </div>
+      <footer class="card-footer">
+        <%= form.submit "Update", class: "card-footer-item button is-link" %>
+        <a href="#" class="card-footer-item">Cancel</a>
+      </footer>
+    <% end %>
+  </div>
+<% end %>

@@ -88,4 +88,18 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
       end
     end
   end
+  test "should get edit" do
+    build_expenses_for_tests()
+    post login_path, params: { person_id: people(:user_one).id }
+    person_expense = people(:user_one).person_expenses.first
+    get edit_expense_path(person_expense.id)
+    assert_response :success
+  end
+  test "should error when trying to edit a PersonExpense that is not of the current user's" do
+    build_expenses_for_tests()
+    post login_path, params: { person_id: people(:user_one).id }
+    person_expense = people(:user_two).person_expenses.first
+    get edit_expense_path(person_expense.id)
+    assert_response :missing
+  end
 end

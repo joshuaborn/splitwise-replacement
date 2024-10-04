@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "side_panel_contents" do %>
   <div class="card" data-controller="card">
-    <%= form_with model: @expense, html: { "data-card-target": "form" } do |form| %>
+    <%= form_with model: @expense do |form| %>
       <header class="card-header">
         <p class="card-header-title">New Transaction</p>
         <a href="#" class="card-header-icon" data-action="click->action-bar#enableNewTransaction">

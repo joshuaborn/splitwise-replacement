@@ -29,6 +29,11 @@ class ExpensesController < ApplicationController
     end
   end
 
+  def edit
+    @person_expense = @current_user.person_expenses.find(params[:id])
+    render layout: false
+  end
+
   private
     def expense_params
       params.require(:expense).permit(:dollar_amount_paid, :date, :payee, :memo)
