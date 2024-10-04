@@ -37,11 +37,17 @@ class ExpensesController < ApplicationController
   def update
     @expense = @current_user.expenses.find(params[:id])
     if @expense.update(update_expense_params)
-      flash[:info] = "Transaction was successfully created."
+      flash[:info] = "Transaction was successfully updated."
       render turbo_stream: turbo_stream.action(:refresh, "")
     else
       render :edit, status: 422, layout: false
     end
+  end
+
+  def destroy
+    @current_user.expenses.find(params[:id]).destroy!
+    flash[:info] = "Transaction was successfully deleted."
+    render turbo_stream: turbo_stream.action(:refresh, "")
   end
 
   private

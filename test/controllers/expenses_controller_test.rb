@@ -209,4 +209,23 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
     assert_response :missing
     assert_equal attributes_before, Expense.find(expense.id).attributes.to_yaml
   end
+  test "#destroy" do
+    build_expenses_for_tests()
+    post login_path, params: { person_id: people(:user_one).id }
+    expense = Expense.find_between_two_people(people(:user_one), people(:user_two)).last
+    assert_difference("Expense.count", -1) do
+      delete expense_path(expense)
+    end
+    assert_response :success
+    assert_select 'turbo-stream[action="refresh"]'
+  end
+  test "#destroy of transaction not associated with current_user" do
+    build_expenses_for_tests()
+    post login_path, params: { person_id: people(:user_one).id }
+    expense = Expense.find_between_two_people(people(:administrator), people(:user_two)).last
+    assert_no_difference("Expense.count") do
+      delete expense_path(expense)
+    end
+    assert_response :missing
+  end
 end
