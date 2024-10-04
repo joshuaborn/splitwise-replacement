@@ -5,7 +5,7 @@ class ExpenseTest < ActiveSupport::TestCase
     expense = Expense.new(
       payee: "Acme, Inc.",
       date: "2024-09-25",
-      amount_paid: 10.00
+      dollar_amount_paid: 10.00
     )
     assert_not expense.valid?
     assert_includes expense.errors.messages[:person_expenses], "is too short (minimum is 2 characters)"
@@ -13,28 +13,28 @@ class ExpenseTest < ActiveSupport::TestCase
     expense = Expense.new(
       payee: "Acme, Inc.",
       date: "2024-09-25",
-      amount_paid: 11.00
+      dollar_amount_paid: 11.00
     )
-    expense.person_expenses.new(person: people(:user_one), amount: 5.50)
+    expense.person_expenses.new(person: people(:user_one), dollar_amount: 5.50)
     assert_not expense.valid?
     assert_includes expense.errors.messages[:person_expenses], "is too short (minimum is 2 characters)"
 
     expense = Expense.new(
       payee: "Acme, Inc.",
       date: "2024-09-25",
-      amount_paid: 11.00
+      dollar_amount_paid: 11.00
     )
-    expense.person_expenses.new(person: people(:user_one), amount: 5.50)
-    expense.person_expenses.new(person: people(:user_two), amount: 5.50)
+    expense.person_expenses.new(person: people(:user_one), dollar_amount: 5.50)
+    expense.person_expenses.new(person: people(:user_two), dollar_amount: -5.50)
     assert expense.valid?
     assert_not_includes expense.errors.messages[:person_expenses], "is too short (minimum is 2 characters)"
 
     expense = Expense.new(
       payee: "Acme, Inc.",
       date: "2024-09-25",
-      amount_paid: 11.00
+      dollar_amount_paid: 11.00
     )
-    expense.person_expenses.new(person: people(:user_one), amount: 5.50)
+    expense.person_expenses.new(person: people(:user_one), dollar_amount: 5.50)
     expense.person_expenses.new(person: people(:user_two))
     assert_not expense.valid?
     assert_includes expense.errors.messages[:person_expenses], "is invalid"
@@ -118,5 +118,19 @@ class ExpenseTest < ActiveSupport::TestCase
     assert_equal 731, expense.amount_paid
     assert_equal "Acme, Inc.", expense.payee
     assert_equal "widgets", expense.memo
+  end
+  test "validation that amounts on person_transactions sum to amount_paid" do
+    expense = Expense.split_between_two_people(
+      people(:user_one),
+      people(:user_two),
+      payee: "Acme, Inc.",
+      date: "2024-09-26",
+      dollar_amount_paid: 7.31,
+      memo: "widgets"
+    )
+    assert expense.valid?
+    expense.person_expenses.first.amount = 1
+    assert_not expense.valid?
+    assert_includes expense.errors.messages[:dollar_amount_paid], "should be the sum of the amounts split between people"
   end
 end

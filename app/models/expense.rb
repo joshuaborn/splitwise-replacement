@@ -6,6 +6,7 @@ class Expense < ApplicationRecord
   validates :dollar_amount_paid, comparison: { greater_than: 0 }
   validates :person_expenses, length: { minimum: 2 }
   validates_associated :person_expenses
+  validate :amounts_sum_to_amount_paid
 
   def dollar_amount_paid
     self.amount_paid.to_f / 100
@@ -39,4 +40,14 @@ class Expense < ApplicationRecord
         where("pe1.person_id = ? AND pe2.person_id = ?", first_person, second_person)
     end
   end
+
+  private
+    def amounts_sum_to_amount_paid
+      amount_sum = self.person_expenses.inject(0) do |cumulative_sum, person_expense|
+        cumulative_sum + person_expense.try(&:amount).to_i.abs
+      end
+      if amount_sum != self.amount_paid
+        self.errors.add(:dollar_amount_paid, "should be the sum of the amounts split between people")
+      end
+    end
 end
