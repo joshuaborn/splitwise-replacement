@@ -18,7 +18,7 @@
         <%= number_to_currency(person_expense.expense.dollar_amount_paid) %>
     </div>
     <div class="cell person-expense-dollar-amount is-col-span-2 has-text-right">
-        <%= number_to_currency(person_expense.dollar_amount.abs) %> owed 
+        <%= number_to_currency(person_expense.dollar_amount.abs) %><span class="is-hidden-tablet"> owed </span>
         <%= person_expense.amount < 0 ? "to" : "by" %> 
         <%= person_expense.other_person.name %>
     </div>
