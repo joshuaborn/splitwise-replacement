@@ -53,6 +53,10 @@ body.side-frame #contents {
   padding: 10px 12px;
 }
 
+.card-footer.buttons .button {
+  border-top-left-radius: 0;
+}
+
 .notification {
   margin: 1rem;
 }
