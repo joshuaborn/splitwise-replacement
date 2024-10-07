@@ -1,126 +1,5 @@
-nav, .card-header {
-  border-bottom: 1px solid hsl(221,14%,24%);
-}
-
-.navbar-menu.is-active {
-  border-top: 1px solid hsl(221,14%,24%);
-}
-
-.navbar-item.title {
-  font-size: inherit;
-  line-height: inherit;
-  margin: 0;
-}
-
-#action-bar {
-  border-bottom: 1px solid hsl(221,14%,24%);
-  
-  .button {
-    border: none;
-  }
-}
-
-.card-header-title {
-  color: rgb(171, 177, 191);
-  font-weight: 800;
-  padding: 10px 12px;
-}
-
-.notification {
-  margin: 1rem;
-}
-
-@media screen and (max-width: 1023px) {
-  #side-panel {
-    padding: 0;
-
-    .card {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      z-index: 100;
-
-      .card-header {
-        height: 52px;
-      }
-
-      .card-footer {
-        bottom: 0;
-        position: absolute;
-        width: 100%;
-      }
-    }
-  }
-}
-
-.grid.person-expense, .expenses .expenses-headings {
-  margin-bottom: 0;
-}
-
-@media screen and (max-width: 768px) {
-  .expenses .date {
-    background-color: hsl(0, 0%, 7%);
-    border-top: 1px solid hsl(221,14%,24%);
-    color: hsl(0, 0%, 88%);
-    padding: 0.25rem 1rem;
-    font-size: 0.9rem;
-  }
-
-  .grid.person-expense {
-    border-top: 1px solid hsl(221,14%,24%);
-    color: inherit;
-    margin-bottom: 0;
-    padding: 0.25rem 0.5rem;
-    
-    .expense-payee, .expense-dollar-amount-paid {
-      color: hsl(0, 0%, 88%);
-    }
-
-    .expense-memo, .person-expense-dollar-amount {
-      font-size: 0.9rem;
-    }
-  }
-
-  #contents {
-    display: flex;
-    flex-direction: column-reverse;
-
-    #main-panel {
-      flex: 0 1 auto;
-      min-height: 0;
-    }
-  }
-}
-
-@media screen and (min-width: 769px) {
-  .expenses {
-    border-left: 1px solid hsl(221,14%,24%);
-    
-    .cell {
-      padding: 0.25rem 0.5rem;
-    }
-
-    .expenses-headings, .person-expense {
-      padding: 0 0.5rem;
-    }
-   
-    .expenses-headings {
-      border-bottom: 1px solid hsl(221,14%,24%);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      
-      div .cell:nth-last-child(n+2) {
-        border-right: 1px solid hsl(221,14%,24%);
-      }
-    }
-
-    .person-expense {
-      border-bottom: 1px solid hsl(221,14%,24%);
-      color: hsl(0, 0%, 88%);
-    }
-  }
+:root {
+  --main-border: 1px solid var(--bulma-border);
 }
 
 html, body {
@@ -131,35 +10,165 @@ html, body {
 body.side-frame {
   display: flex;
   flex-direction: column;
-
-  #navigation-bar, #action-bar {
-    flex: 0 0 auto;
-  }
-
-  #contents {
-    flex: 1 1 auto;
-    min-height: 0;
-  }
 }
 
-.scroller {
-  height: 100%;
+body.side-frame #navigation-bar, body.side-frame #action-bar {
+  flex: 0 0 auto;
+}
+
+body.side-frame #contents {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+#navigation-bar {
+  border-bottom: var(--main-border);
+}
+
+.navbar-menu.is-active {
+  border-top: var(--main-border);
+}
+
+.navbar-item.title {
+  font-size: inherit;
+  line-height: inherit;
   margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  overflow-y: scroll;
+}
+
+#action-bar {
+  border-bottom: var(--main-border);
+}
+
+#action-bar .button {
+  border: none;
+}
+
+.card-header {
+  border-bottom: var(--main-border);
+}
+
+.card-header-title {
+  color: var(--bulma-body-color);
+  font-weight: var(--bulma-weight-extrabold);
+  padding: 10px 12px;
+}
+
+.notification {
+  margin: 1rem;
+}
+
+.expenses .expenses-headings, .person-expense.grid {
+  margin-bottom: 0;
 }
 
 .expenses {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
 
-  .expenses-headings {
-    flex: 0 0 auto;
+.expenses .expenses-headings {
+  flex: 0 0 auto;
+}
+
+.expenses .expenses-content {
+  flex: 1 1 auto;
+}
+
+.scroller {
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0;
+}
+
+@media screen and (max-width: 1023px) {
+  #side-panel {
+    padding: 0;
   }
 
-  .expenses-content {
-    flex: 1 1 auto;
+  #side-panel .card {
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+  }
+
+  #side-panel .card .card-header {
+    height: 52px;
+  }
+
+  #side-panel .card .card-footer {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #contents {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  #contents #main-panel {
+    flex: 0 1 auto;
+    min-height: 0;
+  }
+
+  .expenses .date {
+    background-color: var(--bulma-body-background-color);
+    border-top: var(--main-border);
+    color: var(--bulma-text-bold);
+    font-size: 0.9rem;
+    padding: 0.25rem 1rem;
+  }
+
+  .person-expense.grid {
+    background-color: var(--bulma-background);
+    border-top: var(--main-border);
+    color: inherit;
+    margin-bottom: 0;
+    padding: 0.25rem 0.5rem;
+  }
+    
+  .person-expense.grid .expense-payee, .person-expense.grid .expense-dollar-amount-paid {
+    color: var(--bulma-text-bold);
+  }
+
+  .person-expense.grid .expense-memo, .person-expense.grid .person-expense-dollar-amount {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .expenses {
+    border-left: var(--main-border);
+  }
+    
+  .expenses .cell {
+    padding: 0.25rem 0.5rem;
+  }
+
+  .expenses .expenses-headings, .expenses .person-expense {
+    padding: 0 0.5rem;
+  }
+   
+  .expenses .expenses-headings {
+    border-bottom: var(--main-border);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+    
+  .expenses .expenses-headings div .cell:nth-last-child(n+2) {
+    border-right: var(--main-border);
+  }
+
+  .expenses .person-expense {
+    border-bottom: var(--main-border);
+    color: var(--bulma-text-bold);
   }
 }
