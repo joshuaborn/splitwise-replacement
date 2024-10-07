@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Bentley Needs Money" %></title>
+    <title>Bentley Needs Money <%= " | " + content_for(:title) if content_for(:title) %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
@@ -24,7 +24,7 @@
       <div class="container">
         <div class="navbar-brand">
           <h2 class="navbar-item title">
-            <%= yield :title %>
+            Bentley Needs Money
           </h2>
           <%= yield :navbar_action %>
           <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-burger-target="burger" data-action="click->burger#toggle">
@@ -36,16 +36,18 @@
         </div>
         <div class="navbar-menu" data-burger-target="menu">
           <div class="navbar-start">
-            <%=
-              unless current_page?(controller: 'expenses') or current_page?(root_path)
-                link_to 'Transactions', expenses_path, class: 'navbar-item'
-              end
-            -%>
-            <%=
-              if @current_user.present? and @current_user.is_administrator? and !current_page?(controller: 'people')
-                link_to 'User Management', people_path, class: 'navbar-item'
-              end
-            -%>
+            <% if current_page?(controller: 'expenses') or current_page?(root_path) %>
+              <%= link_to 'Transactions', expenses_path, class: 'navbar-item is-selected' %>
+            <% else %>
+              <%= link_to 'Transactions', expenses_path, class: 'navbar-item' %>
+            <% end %>
+            <% if @current_user.present? and @current_user.is_administrator? %>
+              <% if current_page?(controller: 'people') %>
+                <%= link_to 'User Management', people_path, class: 'navbar-item is-selected' %>
+              <% else %>
+                <%= link_to 'User Management', people_path, class: 'navbar-item' %>
+              <% end %>
+            <% end %>
           </div>
           <div class="navbar-end">
             <% if @current_user %>
