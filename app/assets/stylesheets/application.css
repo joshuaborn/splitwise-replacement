@@ -146,6 +146,10 @@ body.side-frame #contents {
   .person-expense.grid .expense-memo, .person-expense.grid .person-expense-dollar-amount {
     font-size: 0.9rem;
   }
+
+  .card-footer.buttons .button {
+    border-radius: 0;
+  }
 }
 
 @media screen and (min-width: 769px) {
