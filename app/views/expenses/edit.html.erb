@@ -20,18 +20,21 @@
                 <%= subform.label :dollar_amount, subform.object.person.name + "'s Contribution", class: "label" %>
               <% end %>
               <div class="control has-icons-left">
-                <%= subform.number_field :dollar_amount, step: 0.01, icon_left: "fa-solid fa-dollar-sign", class: "input" %>
+                <%= subform.number_field :dollar_amount, step: 0.01, icon_left: "fa-solid fa-dollar-sign", class: @expense.errors[:person_expenses].present? ? "input is-danger" : "input" %>
                 <span class="icon is-small is-left"><i class="fa-solid fa-dollar-sign" aria-hidden="true"></i></span>
               </div>
+              <% if @expense.errors[:person_expenses] %>
+                <% @expense.errors[:person_expenses].each do |error| %>
+                  <p class="help is-danger">
+                    <%= error %>
+                  </p>
+                <% end %>
+              <% end %>
             </div>
           <% end %>
           <%= form.bulma_form_element :date_field, :date %>
           <%= form.bulma_form_element :text_field, :payee %>
           <%= form.bulma_form_element :text_field, :memo %>
-          <div class="field">
-            <div class="control">
-            </div>
-          </div>
         </div>
       </div>
       <footer class="card-footer buttons has-addons">

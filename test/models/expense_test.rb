@@ -119,7 +119,7 @@ class ExpenseTest < ActiveSupport::TestCase
     assert_equal "Acme, Inc.", expense.payee
     assert_equal "widgets", expense.memo
   end
-  test "validation that amounts on person_transactions sum to amount_paid" do
+  test "validation that absolute values of amounts on person_transactions sum to amount_paid and amounts sum to zero" do
     expense = Expense.split_between_two_people(
       people(:user_one),
       people(:user_two),
@@ -132,5 +132,6 @@ class ExpenseTest < ActiveSupport::TestCase
     expense.person_expenses.first.amount = 1
     assert_not expense.valid?
     assert_includes expense.errors.messages[:dollar_amount_paid], "should be the sum of the amounts split between people"
+    assert_includes expense.errors.messages[:person_expenses], "amounts should sum to zero"
   end
 end
