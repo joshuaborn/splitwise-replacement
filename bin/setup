@@ -2,7 +2,7 @@
 require "fileutils"
 
 APP_ROOT = File.expand_path("..", __dir__)
-APP_NAME = "splitwise-replacement"
+APP_NAME = "bentley-needs-money"
 
 def system!(*args)
   system(*args, exception: true)
