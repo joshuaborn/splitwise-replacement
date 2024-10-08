@@ -1,23 +1,24 @@
 <% content_for :body_attributes, 'class=side-frame' %>
 <% content_for :content do %>
-    <div id="action-bar" class="is-hidden-touch my-0">
-        <%= yield :action_bar %>
+  <div id="action-bar" class="is-hidden-touch my-0">
+      <%= yield :action_bar %>
+  </div>
+  <div id="contents" class="columns is-gapless">
+    <div id="side-panel" class="column is-one-quarter-desktop">
+      <turbo-frame id="side_panel_contents">
+        <% if flash.any? %>
+          <% flash.each do |type, msg| %>
+            <div class="notification is-<%= type %>" data-turbo-temporary>
+              <a href="#" class="delete"></a>
+              <%= msg %>
+            </div>
+          <% end %>
+        <% end %>
+      </turbo-frame>
     </div>
-    <div id="contents" class="columns is-gapless">
-      <div id="side-panel" class="column is-one-quarter-desktop">
-        <turbo-frame id="side_panel_contents">
-            <% if flash.any? %>
-              <% flash.each do |type, msg| %>
-                <div class="notification is-<%= type %>" data-turbo-temporary>
-                  <%= msg %>
-                </div>
-              <% end %>
-            <% end %>
-        </turbo-frame>
-      </div>
-      <div id="main-panel" class="column is-three-quarters-desktop">
-        <%= yield %>
-      </div>
+    <div id="main-panel" class="column is-three-quarters-desktop">
+      <%= yield %>
     </div>
+  </div>
 <% end %>
 <%= render template: "layouts/_main" %>

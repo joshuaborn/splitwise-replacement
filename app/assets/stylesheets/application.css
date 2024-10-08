@@ -89,16 +89,17 @@ body.side-frame #contents {
 
 @media screen and (max-width: 1023px) {
   #side-panel {
+    left: 0;
     padding: 0;
+    position: fixed;
+    top: 53px;
+    width: 100%;
+    z-index: 100;
   }
 
   #side-panel .card {
     height: 100%;
-    left: 0;
-    position: fixed;
-    top: 0;
     width: 100%;
-    z-index: 100;
   }
 
   #side-panel .card .card-header {
@@ -107,7 +108,6 @@ body.side-frame #contents {
 
   #side-panel .card .card-footer {
     bottom: 0;
-    position: absolute;
     width: 100%;
   }
 }
@@ -148,7 +148,7 @@ body.side-frame #contents {
   }
 
   .card-footer.buttons .button {
-    border-radius: 0;
+    border-top-left-radius: 0;
   }
 }
 
