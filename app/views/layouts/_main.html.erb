@@ -13,6 +13,7 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <%= favicon_link_tag asset_path("bentley-32x32.png") %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <script src="https://kit.fontawesome.com/60cf2ed680.js" crossorigin="anonymous"></script>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -23,9 +24,10 @@
     <nav id="navigation-bar" class="navbar" role="navigation" aria-label="main navigation" data-controller="burger">
       <div class="container">
         <div class="navbar-brand">
-          <h2 class="navbar-item title">
+          <%= link_to root_url, class: "navbar-item title" do %>
+            <%= image_tag "bentley-153x153.png" %>
             Bentley Needs Money
-          </h2>
+          <% end %>
           <%= yield :navbar_action %>
           <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-burger-target="burger" data-action="click->burger#toggle">
             <span aria-hidden="true"></span>
