@@ -30,7 +30,8 @@ class ExpensesController < ApplicationController
   end
 
   def edit
-    @expense = @current_user.person_expenses.find(params[:id]).expense
+    @person_expense = @current_user.person_expenses.find(params[:id])
+    @expense = @person_expense.expense
     render layout: false
   end
 
@@ -56,6 +57,9 @@ class ExpensesController < ApplicationController
     end
 
     def update_expense_params
-      params.require(:expense).permit(:dollar_amount_paid, :date, :payee, :memo, person_expenses_attributes: [ :id, :dollar_amount ])
+      params.require(:expense).permit(
+        :dollar_amount_paid, :date, :payee, :memo,
+        person_expenses_attributes: [ :id, :dollar_amount, :in_ynab ]
+      )
     end
 end

@@ -12,6 +12,9 @@
         <%= person_expense.expense.payee %>
     </div>
     <div class="cell expense-memo is-row-start-2-mobile">
+        <% if person_expense.in_ynab? %>
+            <i class="fa-regular fa-square-check"></i>
+        <% end %>
         <%= person_expense.expense.memo %>
     </div>
     <div class="cell expense-dollar-amount-paid is-col-span-2-mobile has-text-right">

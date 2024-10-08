@@ -22,15 +22,15 @@ class Expense < ApplicationRecord
       expense = Expense.new(attrs)
       half_amount = expense.amount_paid.to_f / 2
       if half_amount % 1 == 0 then
-        expense.person_expenses.new(person: ower, amount: -half_amount)
-        expense.person_expenses.new(person: payer, amount: half_amount)
+        expense.person_expenses.new(person: payer, amount: half_amount, in_ynab: true)
+        expense.person_expenses.new(person: ower, amount: -half_amount, in_ynab: false)
       else
         if rand() <= 0.5 then
-          expense.person_expenses.new(person: ower, amount: -half_amount.ceil)
-          expense.person_expenses.new(person: payer, amount: half_amount.floor)
+          expense.person_expenses.new(person: payer, amount: half_amount.floor, in_ynab: true)
+          expense.person_expenses.new(person: ower, amount: -half_amount.ceil, in_ynab: false)
         else
-          expense.person_expenses.new(person: ower, amount: -half_amount.floor)
-          expense.person_expenses.new(person: payer, amount: half_amount.ceil)
+          expense.person_expenses.new(person: payer, amount: half_amount.ceil, in_ynab: true)
+          expense.person_expenses.new(person: ower, amount: -half_amount.floor, in_ynab: false)
         end
       end
       expense

@@ -57,7 +57,9 @@ class ExpenseTest < ActiveSupport::TestCase
     assert_equal 1000, expense.amount_paid
     assert_equal 10.00, expense.dollar_amount_paid
     assert_equal 5.00, expense.person_expenses.where(person: people(:user_one)).first.dollar_amount
+    assert expense.person_expenses.where(person: people(:user_one)).first.in_ynab
     assert_equal (-5.00), expense.person_expenses.where(person: people(:user_two)).first.dollar_amount
+    assert_not expense.person_expenses.where(person: people(:user_two)).first.in_ynab
     srand(9192024)
     expense = Expense.split_between_two_people(
       people(:user_one),
@@ -70,7 +72,9 @@ class ExpenseTest < ActiveSupport::TestCase
     assert_equal 731, expense.amount_paid
     assert_equal 7.31, expense.dollar_amount_paid
     assert_equal 3.66, expense.person_expenses.where(person: people(:user_one)).first.dollar_amount
+    assert expense.person_expenses.where(person: people(:user_one)).first.in_ynab
     assert_equal (-3.65), expense.person_expenses.where(person: people(:user_two)).first.dollar_amount
+    assert_not expense.person_expenses.where(person: people(:user_two)).first.in_ynab
     srand(9192027)
     expense = Expense.split_between_two_people(
       people(:user_one),
@@ -83,7 +87,9 @@ class ExpenseTest < ActiveSupport::TestCase
     assert_equal 731, expense.amount_paid
     assert_equal 7.31, expense.dollar_amount_paid
     assert_equal 3.65, expense.person_expenses.where(person: people(:user_one)).first.dollar_amount
+    assert expense.person_expenses.where(person: people(:user_one)).first.in_ynab
     assert_equal (-3.66), expense.person_expenses.where(person: people(:user_two)).first.dollar_amount
+    assert_not expense.person_expenses.where(person: people(:user_two)).first.in_ynab
   end
   test "getting all and only expenses split between two people" do
     build_expenses_for_tests()

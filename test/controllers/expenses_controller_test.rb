@@ -136,7 +136,8 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
             },
             "1": {
               id: expense.person_expenses.last.id,
-              dollar_amount: 1.50
+              dollar_amount: 1.50,
+              in_ynab: true
             }
           }
         }
@@ -154,6 +155,7 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
     person_expense_1 = PersonExpense.find(expense.person_expenses.last.id)
     assert_equal expense_after, person_expense_1.expense
     assert_equal 1.50, person_expense_1.dollar_amount
+    assert person_expense_1.in_ynab?
   end
   test "#update re-rendering edit when there are validation errors" do
     build_expenses_for_tests()

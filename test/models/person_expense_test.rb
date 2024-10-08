@@ -120,7 +120,7 @@ class PersonExpenseTest < ActiveSupport::TestCase
       dollar_amount_paid: 6.51
     )
     expense.save!
-    assert_equal (-3.26), expense.person_expenses.first.dollar_cumulative_sum
-    assert_equal 3.25, expense.person_expenses.last.dollar_cumulative_sum
+    assert_equal (-3.26), expense.person_expenses.last.dollar_cumulative_sum
+    assert_equal 3.25, expense.person_expenses.first.dollar_cumulative_sum
   end
 end

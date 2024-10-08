@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_20_131142) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_08_193131) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -39,6 +39,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_20_131142) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "cumulative_sum"
+    t.boolean "in_ynab"
   end
 
   add_foreign_key "person_expenses", "expenses"
